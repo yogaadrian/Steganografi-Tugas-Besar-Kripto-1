@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package FileReader;
+import Bitmap.Bitmap;
+import Message.StringBlock;
 import java.io.IOException;
     import java.nio.file.Files;
     import java.nio.file.Paths;
@@ -37,13 +39,13 @@ public class FileReader {
             Path path = Paths.get("simple.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
-            int colorStart = rawData[10] 
-                             + (rawData[11] / 16) * 16 * 16 * 16 + (rawData[11] % 16) * 16 * 16
-                             + (rawData[12] / 16) * 16 * 16 * 16 * 16 * 16 + (rawData[12] % 16) * 16 * 16 * 16 * 16
-                             + (rawData[13] / 16) * 16 * 16 * 16 * 16 * 16 * 16 * 16 + (rawData[13] % 16) * 16 * 16 * 16 * 16 * 16 * 16;
-                        
-            for (int i=0; i < rawData.length; i++)
-                System.out.println((rawData[i]));
+            Bitmap a = new Bitmap(rawData);
+            //System.out.println(a.getMaximumSize(0.3));
+            
+            StringBlock s = new StringBlock("YogaAdri");
+            
+            /*for (int i=0; i < rawData.length; i++)
+                System.out.println((rawData[i]));*/
             
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
