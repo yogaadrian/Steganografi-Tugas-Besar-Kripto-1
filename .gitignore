@@ -5,6 +5,7 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+<<<<<<< Updated upstream
 
 Steganografi-Tugas-Besar-Kripto-1/build.xml
 *.mf
@@ -12,3 +13,8 @@ Steganografi-Tugas-Besar-Kripto-1/nbproject/build-impl.xml
 Steganografi-Tugas-Besar-Kripto-1/nbproject/genfiles.properties
 *.properties
 Steganografi-Tugas-Besar-Kripto-1/nbproject/project.xml
+=======
+/Tubes 1 Kripto/nbproject/private/
+/Steganografi-Tugas-Besar-Kripto-1/Steganografi Tugas Besar Kripto 1/nbproject/private/
+/Steganografi-Tugas-Besar-Kripto-1/nbproject/private/
+>>>>>>> Stashed changes
