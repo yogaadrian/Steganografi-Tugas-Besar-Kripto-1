@@ -23,7 +23,7 @@ public class FileReader {
     
     public static String hex(int n) {
     // call toUpperCase() if that's required
-    return String.format("0x%8s", Integer.toHexString(n)).replace(' ', '0');
+    return String.format("0x%2s", Integer.toHexString(n)).replace(' ', '0');
 }
 
     public static String hex(float f) {
@@ -34,10 +34,17 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("fery.bmp");
-            byte[] data = Files.readAllBytes(path);
-            for (int i=0; i < data.length; i++)
-                System.out.println(hex(data[i]));
+            Path path = Paths.get("simple.bmp");
+            byte[] rawData = Files.readAllBytes(path);
+            
+            int colorStart = rawData[10] 
+                             + (rawData[11] / 16) * 16 * 16 * 16 + (rawData[11] % 16) * 16 * 16
+                             + (rawData[12] / 16) * 16 * 16 * 16 * 16 * 16 + (rawData[12] % 16) * 16 * 16 * 16 * 16
+                             + (rawData[13] / 16) * 16 * 16 * 16 * 16 * 16 * 16 * 16 + (rawData[13] % 16) * 16 * 16 * 16 * 16 * 16 * 16;
+                        
+            for (int i=0; i < rawData.length; i++)
+                System.out.println((rawData[i]));
+            
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
