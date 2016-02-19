@@ -27,7 +27,15 @@ public class StringBlock {
     for ( int i = 0; i < planenumber; i++ ) {
       planes[i] = new Plane(i, data, size);
       if ( planes[i].getComplexity() < threshold ) planes[i].conjugate();
-      planes[i].print();
+      //planes[i].print();
     }
   }  
+  
+  public int getPlaneNumber() {
+    return planenumber;
+  }
+  
+  public Plane getPlane(int i) {
+    return planes[i];
+  }
 }

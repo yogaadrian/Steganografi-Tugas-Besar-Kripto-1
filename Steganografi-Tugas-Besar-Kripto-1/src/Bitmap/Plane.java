@@ -58,6 +58,10 @@ public class Plane {
     calculateComplexity();
   }
   
+  public char[][] getData() {
+    return data;
+  }
+  
   public double getComplexity() {
     return complexity;
   }
@@ -135,6 +139,10 @@ public class Plane {
         data[y][x] = ( data[y][x] == Wc[y][x] ) ? '0' : '1';
       }
     }    
+  }
+  
+  public void changeData(char[][] newData) {
+    this.data = newData;
   }
   
   public void print() {

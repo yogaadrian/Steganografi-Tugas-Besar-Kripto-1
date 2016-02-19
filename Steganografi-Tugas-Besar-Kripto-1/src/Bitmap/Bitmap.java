@@ -5,6 +5,7 @@
  */
 package Bitmap;
 
+import Message.StringBlock;
 import java.util.Arrays;
 
 /**
@@ -24,6 +25,8 @@ public class Bitmap {
   int[][] colorData;
   
   Block[][] blocks;
+  int blockX;
+  int blockY;
 
   public Bitmap(byte[] data) {
     rawData = data;
@@ -56,9 +59,12 @@ public class Bitmap {
       x = x + padding;
     }
     
-    blocks = new Block[((height/8)+1)][((width/8)+1)];
-    for (int i = 0; i < height/8 + 1; i++) {
-      for (int j = 0; j < width/8 + 1; j++) {
+    blockY = (int) Math.ceil(height/8.0);
+    blockX = (int) Math.ceil(width/8.0);
+    
+    blocks = new Block[blockY][blockX];
+    for (int i = 0; i < blockY; i++) {
+      for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i*8, j*8, colorData, bpp);
       }
     }
@@ -75,12 +81,45 @@ public class Bitmap {
 
   public int getMaximumSize( double threshold ) {
     int valid = 0;
-    for (int i = 0; i < height/8 + 1; i++) {
-      for (int j = 0; j < width/8 + 1; j++) {
+    for (int i = 0; i < blockY; i++) {
+      for (int j = 0; j < blockX; j++) {
         valid += (blocks[i][j]).getFeasiblePlaneCount(threshold);
       }
     }    
     return valid * 8; /* Dalam Bytes */
+  }
+  
+  public boolean insertMessage(StringBlock message, double threshold) {
+    int block = 0;
+    int successPlane = 0;
+    
+    for (int i = 0; i < message.getPlaneNumber(); i++) {
+      boolean stillTrying = true;
+      int y = block/blockY;
+      int x = block-(y * block);
+            
+      if ( y < blockY ) {
+        while (!blocks[y][x].insertMessagePlane(message.getPlane(i), threshold) && stillTrying) {
+          ++block;
+
+          y = block/blockY;
+          x = block-(y * block);
+
+          if ( y >= blockY ) {
+            stillTrying = false;
+            y = 0;
+            x = 0;
+          }
+        }
+        if (stillTrying) {
+          successPlane++;
+        }
+      } else {
+        stillTrying = false;
+      }      
+    }
+    
+    return (successPlane == message.getPlaneNumber());
   }
   
   public int getColorStart() {

@@ -36,13 +36,19 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("simple.bmp");
+            Path path = Paths.get("testcase.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
-            Bitmap a = new Bitmap(rawData);
-            //System.out.println(a.getMaximumSize(0.3));
+            double threshold = 0.01;
             
-            StringBlock s = new StringBlock("YogaAdrian", 0.3);
+            Bitmap a = new Bitmap(rawData);
+            System.out.println(a.getMaximumSize(threshold));
+            
+            if (a.insertMessage(new StringBlock("Yoga Adrian Saputra", threshold), threshold)) {
+              System.out.println("Success");
+            } else {
+              System.out.println("Gagal");
+            }
             
             /*for (int i=0; i < rawData.length; i++)
                 System.out.println((rawData[i]));*/

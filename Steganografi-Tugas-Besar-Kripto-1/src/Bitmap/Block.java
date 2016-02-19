@@ -13,6 +13,7 @@ public class Block {
   int size;
   int bpp; /*in Byte*/
   int data[][];
+  int lastInsert = -1;
   Plane[] planes;
   
   public Block(int i, int j, int[][] colorData, int bpp) {
@@ -47,6 +48,26 @@ public class Block {
       if ( (planes[i]).getComplexity() > threshold ) valid++;
     }
     return valid;
+  }
+  
+  public boolean insertMessagePlane(Plane message, double threshold) {
+    int i = lastInsert + 1;
+    boolean success = false;
+    
+    while (i < size) {
+      if (planes[i].getComplexity() > threshold) {
+        planes[i].changeData(message.getData());
+        success = true;
+        lastInsert = i;
+        //System.out.println("Changed Plane " + i);
+
+        i = size;
+      } else {
+        ++i;
+      }      
+    }
+    
+    return success;
   }
   
   public void print() {
