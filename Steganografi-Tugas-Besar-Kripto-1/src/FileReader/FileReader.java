@@ -5,6 +5,7 @@
  */
 package FileReader;
 import Bitmap.Bitmap;
+import Bitmap.Plane;
 import Message.StringBlock;
 import java.io.IOException;
     import java.nio.file.Files;
@@ -49,6 +50,27 @@ public class FileReader {
             } else {
               System.out.println("Gagal");
             }
+            Plane[] message;
+            
+            int counter=0;
+            
+            message = new Plane[a.getMaximumSize(threshold)];
+            System.out.println(a.getMaximumSize(threshold));
+            for (int i=0 ; i < a.blockX;i++){
+                for (int j=0; j < a.blockY;j++){
+                    for (int k=0; k < a.blocks[i][j].planes.length; k++){
+                      if (a.blocks[i][j].planes[k].getComplexity() > 0.01){
+                          message[counter] = a.blocks[i][j].planes[k];
+                          counter++;
+                      }
+                    }
+                }
+            }
+            System.out.println(counter);
+            for (int i=0; i<counter; i++){
+                message[i].print();
+            }
+
             
             /*for (int i=0; i < rawData.length; i++)
                 System.out.println((rawData[i]));*/
