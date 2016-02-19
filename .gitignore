@@ -5,3 +5,10 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+
+Steganografi-Tugas-Besar-Kripto-1/build.xml
+*.mf
+Steganografi-Tugas-Besar-Kripto-1/nbproject/build-impl.xml
+Steganografi-Tugas-Besar-Kripto-1/nbproject/genfiles.properties
+*.properties
+Steganografi-Tugas-Besar-Kripto-1/nbproject/project.xml
