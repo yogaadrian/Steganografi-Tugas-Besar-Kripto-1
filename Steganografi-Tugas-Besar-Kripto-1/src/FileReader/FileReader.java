@@ -42,7 +42,7 @@ public class FileReader {
             Bitmap a = new Bitmap(rawData);
             //System.out.println(a.getMaximumSize(0.3));
             
-            StringBlock s = new StringBlock("YogaAdri");
+            StringBlock s = new StringBlock("YogaAdrian", 0.3);
             
             /*for (int i=0; i < rawData.length; i++)
                 System.out.println((rawData[i]));*/

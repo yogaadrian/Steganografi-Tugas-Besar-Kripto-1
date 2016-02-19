@@ -38,18 +38,22 @@ public class Plane {
     data = new char[size][size]; 
            
     for (int y = (i * size); y < (i + 1) * size; y++) {
-      String binary = Integer.toString((int)message.charAt(y), 2);
+      String binary = "00000000";
+      
+      if ( y < message.length() ) {
+        binary = Integer.toString((int)message.charAt(y), 2);
+      }       
+      
       for (int x = 0; x < size; x++) {
         
         if (binary.length() - x - 1 < 0) {
-          data[y][size - x - 1] = '0';
+          data[y - (i * size)][size - x - 1] = '0';
         } else {
-          data[y][size - x - 1] = binary.charAt(binary.length() - x - 1);
+          data[y - (i * size)][size - x - 1] = binary.charAt(binary.length() - x - 1);
         }
         
       }
     }
-    
     //toCGC();    
     calculateComplexity();
   }
@@ -114,6 +118,23 @@ public class Plane {
     }
     
     data = pbc;    
+  }
+  
+  public void conjugate() {
+    char[][] Wc;
+    Wc = new char[size][size];
+    
+    for (int x = 0; x < size; x++) {
+      for (int y = 0; y < size; y++) {
+        Wc[y][x] = (((x+y)%2) == 0) ? '0' : '1';
+      }
+    }
+    
+    for (int x = 0; x < size; x++) {
+      for (int y = 0; y < size; y++) {
+        data[y][x] = ( data[y][x] == Wc[y][x] ) ? '0' : '1';
+      }
+    }    
   }
   
   public void print() {

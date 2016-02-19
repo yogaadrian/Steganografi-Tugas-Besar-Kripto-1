@@ -18,14 +18,15 @@ public class StringBlock {
   String data;
   Plane[] planes;
   
-  public StringBlock(String data) {
+  public StringBlock(String data, double threshold) {
     size = 8;
     this.data = data;
-    planenumber = data.length()*8/(size*size);
+    planenumber = (int) Math.ceil(data.length()*8/(double)(size*size));
     planes = new Plane[planenumber];
     
     for ( int i = 0; i < planenumber; i++ ) {
-      planes[i] = new Plane(i * size, data, size);
+      planes[i] = new Plane(i, data, size);
+      if ( planes[i].getComplexity() < threshold ) planes[i].conjugate();
       planes[i].print();
     }
   }  
