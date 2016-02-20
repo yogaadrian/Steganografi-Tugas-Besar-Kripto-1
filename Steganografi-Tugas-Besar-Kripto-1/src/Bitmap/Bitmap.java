@@ -105,6 +105,28 @@ public class Bitmap {
     
     return arrbyte;
   }
+  
+  public byte[] extractBitmap() {
+    byte[] newBitmap = new byte[colorStart 
+                                + (( height + (8 - (height % 8))) * ( width + (8 - (width % 8)))) * bpp ];
+    
+    /* Copy Header */
+    for (int i = 0; i < colorStart; i++) {
+      newBitmap[i] = rawData[i];
+    }
+    
+    /* Mulai Color */
+    int bit = colorStart;
+    for (int i = 0; i < ( height + (8 - (height % 8))); i++) {
+      for (int j = 0; j < ( width + (8 - (width % 8))); j++) {
+        byte[] temp = intToHex(colorData[i][j]);
+        for (int b = 0; b < bpp; b++) {
+          newBitmap[bit] = temp[b]; 
+          bit++;
+        }
+      }
+    }
+  }
 
   public int getMaximumSize(double threshold) {
     int valid = 0;
