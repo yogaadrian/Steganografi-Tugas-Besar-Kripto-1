@@ -57,7 +57,7 @@ public class Bitmap {
         } else {
           colorData[i][j] = 0;
         }
-        System.out.println(colorData[i][j]);
+        //System.out.println(colorData[i][j]);
       }
 
       x = x + padding;
@@ -68,16 +68,6 @@ public class Bitmap {
       for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp);
         //blocks[i][j].print();
-      }
-    }
-
-    System.out.println("");
-    System.out.println("======");
-    System.out.println("");
-
-    for (int i = 0; i < blockY * 8; i++) {
-      for (int j = 0; j < blockX * 8; j++) {
-        System.out.println(colorData[i][j]);
       }
     }
   }
@@ -221,7 +211,7 @@ public class Bitmap {
                 biner = biner.concat(Character.toString(blocks[i][j].planes[k].data[l][m]));
               }
               message = message.concat(Character.toString((char) Integer.parseInt(biner, 2)));
-
+              //System.out.println(message);
             }
           }
         }
