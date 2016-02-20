@@ -25,9 +25,9 @@ public class Block {
     data = new int[size][size];
     
     int n, m;
-    for (n = j; n < j + size; n++) {
-      for (m = i; m < i + size; m++) {
-        data[x][y] = colorData[m][n];
+    for (m = i; m < i + size; m++) {
+      for (n = j; n < j + size; n++) {
+        data[y][x] = colorData[m][n];
         x++;
       }
       x = 0;
@@ -39,6 +39,20 @@ public class Block {
     for(int a=0; a < bpp * size; a++) {
       planes[a] = new Plane(a, data, size);
       //planes[a].print();
+    }
+  }
+  
+  public void constructNewBlock() {
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        String binary = "";
+        
+        for(int a = 0; a < bpp * size; a++) {
+          binary = planes[a].getBitFromBlock(x, y) + binary;
+        } 
+        
+        data[y][x] = Integer.parseInt(binary,2);
+      }
     }
   }
   

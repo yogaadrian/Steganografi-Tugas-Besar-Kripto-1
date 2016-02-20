@@ -58,6 +58,10 @@ public class Plane {
     calculateComplexity();
   }
   
+  public char getBitFromBlock(int x, int y) {
+    return data[y][x];
+  }
+  
   public char[][] getData() {
     return data;
   }
