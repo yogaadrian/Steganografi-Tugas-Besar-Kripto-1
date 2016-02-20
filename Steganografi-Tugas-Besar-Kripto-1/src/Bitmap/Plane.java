@@ -12,7 +12,7 @@ package Bitmap;
 public class Plane {
   int size;
   double complexity;
-  char[][] data;
+ public char[][] data;
   
   public Plane(int i, int[][] block, int size) {
     this.size = size;
