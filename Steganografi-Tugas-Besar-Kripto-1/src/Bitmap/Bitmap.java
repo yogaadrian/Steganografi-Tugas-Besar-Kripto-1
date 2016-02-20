@@ -27,6 +27,8 @@ public class Bitmap {
   public Block[][] blocks;
   public int blockX;
   public int blockY;
+  
+  public String detectedString = "";
 
   public Bitmap(byte[] data, double complexity) {
     rawData = data;
@@ -67,7 +69,8 @@ public class Bitmap {
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp, complexity);
-        //blocks[i][j].print();
+        
+        detectedString += blocks[i][j].detectedString;
       }
     }
   }
@@ -201,13 +204,7 @@ public class Bitmap {
   }
 
   public String getMessage(double threshold) {
-    String message = "";
-    for (int i = 0; i < blockY; i++) {
-      for (int j = 0; j < blockX; j++) {
-        message += blocks[i][j].detectedString;
-      }
-    }
-    return message;
+    return detectedString;
   }
 
   public void constructNewBitmap() {

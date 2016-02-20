@@ -62,7 +62,7 @@ public class Block {
   
   public int getFeasiblePlaneCount(double threshold) {
     int valid = 0;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size * bpp; i++) {
       if ( (planes[i]).getComplexity() > threshold ) valid++;
     }
     return valid;
@@ -72,14 +72,14 @@ public class Block {
     int i = lastInsert + 1;
     boolean success = false;
     
-    while (i < size) {
+    while (i < size * bpp) {
       if (planes[i].getComplexity() > threshold) {
         planes[i].changeData(message.getData());
         success = true;
         lastInsert = i;
         //System.out.println("Changed Plane " + i);
 
-        i = size;
+        i = size * bpp;
       } else {
         ++i;
       }      

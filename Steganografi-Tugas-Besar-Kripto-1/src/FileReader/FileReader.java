@@ -41,11 +41,11 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            //Path path = Paths.get("Lenna.bmp");
+            //Path path = Paths.get("testcase.bmp");
             Path path = Paths.get("stegano.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
-            double threshold = 0.3;
+            double threshold = 0.01;
             
             Bitmap a = new Bitmap(rawData, threshold);
             System.out.println(a.getMessage(threshold));
@@ -58,7 +58,7 @@ public class FileReader {
             }
             
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(a.extractBitmap()));
-            ImageIO.write(image, "BMP", new File("stegano.bmp"));
+            ImageIO.write(image, "BMP", new File("stegano2.bmp"));
             */
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
