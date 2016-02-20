@@ -41,10 +41,10 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("Lenna.bmp");
+            Path path = Paths.get("stegano.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
-            double threshold = 0.3;
+            double threshold = 0.01;
             
             Bitmap a = new Bitmap(rawData);
             System.out.println(a.getMessage(threshold));

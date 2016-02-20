@@ -98,6 +98,7 @@ public class Bitmap {
   }
   
   public byte[] extractBitmap() {
+    constructNewBitmap();
     byte[] newBitmap = new byte[colorStart 
                                 + (blockY * 8) * ( blockX * 8 ) * bpp ];
     
@@ -201,8 +202,8 @@ public class Bitmap {
 
   public String getMessage(double threshold) {
     String message = "";
-    for (int i = 0; i < blockX; i++) {
-      for (int j = 0; j < blockY; j++) {
+    for (int i = 0; i < blockY; i++) {
+      for (int j = 0; j < blockX; j++) {
         for (int k = 0; k < blocks[i][j].planes.length; k++) {
           if (blocks[i][j].planes[k].getComplexity() > threshold) {
             for (int l = 0; l < blocks[i][j].planes[k].size; l++) {
@@ -223,6 +224,7 @@ public class Bitmap {
   public void constructNewBitmap() {
     for (int i = 0; i < blockY * 8; i++) {
       for (int j = 0; j < blockX * 8; j++) {
+        blocks[i / 8][j / 8].constructNewBlock();
         colorData[i][j] = blocks[i / 8][j / 8].data[i % 8][j % 8];
       }
     }

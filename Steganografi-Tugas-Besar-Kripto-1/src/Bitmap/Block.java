@@ -43,6 +43,7 @@ public class Block {
   }
   
   public void constructNewBlock() {
+    convertAllToPBC();
     for (int y = 0; y < size; y++) {
       for (int x = 0; x < size; x++) {
         String binary = "";
