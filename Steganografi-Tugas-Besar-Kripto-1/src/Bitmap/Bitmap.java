@@ -36,12 +36,16 @@ public class Bitmap {
     height = hexToInt(data[22], data[23], data[24], data[25]);
     bpp = hexToInt(data[28], data[29], 0, 0) / 8;
     padding = (width * bpp) % 4;
-    colorData = new int[height + (8 - (height % 8))][width + (8 - (width % 8))];
+    
+    blockY = (int) Math.ceil(height / 8.0);
+    blockX = (int) Math.ceil(width / 8.0);
+
+    colorData = new int[blockY * 8][blockX * 8];
 
     /* Creating Array of Color Only Data */
     int x = colorStart;
-    for (int i = 0; i < height + (8 - (height % 8)); i++) {
-      for (int j = 0; j < width + (8 - (width % 8)); j++) {
+    for (int i = 0; i < blockY * 8; i++) {
+      for (int j = 0; j < blockX * 8; j++) {
         if ((i < height) && (j < width)) {
           int[] p = new int[4];
           Arrays.fill(p, 0);
@@ -53,30 +57,17 @@ public class Bitmap {
         } else {
           colorData[i][j] = 0;
         }
-        System.out.println(colorData[i][j]);
+        //System.out.println(colorData[i][j]);
       }
 
       x = x + padding;
     }
-
-    blockY = (int) Math.ceil(height / 8.0);
-    blockX = (int) Math.ceil(width / 8.0);
 
     blocks = new Block[blockY][blockX];
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp);
         //blocks[i][j].print();
-      }
-    }
-
-    System.out.println("");
-    System.out.println("======");
-    System.out.println("");
-
-    for (int i = 0; i < height + (8 - (height % 8)); i++) {
-      for (int j = 0; j < width + (8 - (width % 8)); j++) {
-        System.out.println(colorData[i][j]);
       }
     }
   }
@@ -104,6 +95,41 @@ public class Bitmap {
     arrbyte[3]=(byte) arr[3];
     
     return arrbyte;
+  }
+  
+  public byte[] extractBitmap() {
+    constructNewBitmap();
+    byte[] newBitmap = new byte[colorStart 
+                                + (blockY * 8) * ( blockX * 8 ) * bpp ];
+    
+    /* Copy Header */
+    for (int i = 0; i < colorStart; i++) {
+      newBitmap[i] = rawData[i];
+    }
+    
+    byte[] temp;
+    temp = intToHex(blockX * 8);
+    for (int i = 0; i < 4; i++) {
+      newBitmap[18+i] = temp[i];
+    }
+    temp = intToHex(blockY * 8);
+    for (int i = 0; i < 4; i++) {
+      newBitmap[22+i] = temp[i];
+    }
+    
+    /* Mulai Color */
+    int bit = colorStart;
+    for (int i = 0; i < blockY * 8; i++) {
+      for (int j = 0; j < blockX * 8; j++) {
+        temp = intToHex(colorData[i][j]);
+        for (int b = 0; b < bpp; b++) {
+          newBitmap[bit] = temp[b]; 
+          bit++;
+        }
+      }
+    }
+    
+    return newBitmap;
   }
 
   public int getMaximumSize(double threshold) {
@@ -176,8 +202,8 @@ public class Bitmap {
 
   public String getMessage(double threshold) {
     String message = "";
-    for (int i = 0; i < blockX; i++) {
-      for (int j = 0; j < blockY; j++) {
+    for (int i = 0; i < blockY; i++) {
+      for (int j = 0; j < blockX; j++) {
         for (int k = 0; k < blocks[i][j].planes.length; k++) {
           if (blocks[i][j].planes[k].getComplexity() > threshold) {
             for (int l = 0; l < blocks[i][j].planes[k].size; l++) {
@@ -186,7 +212,7 @@ public class Bitmap {
                 biner = biner.concat(Character.toString(blocks[i][j].planes[k].data[l][m]));
               }
               message = message.concat(Character.toString((char) Integer.parseInt(biner, 2)));
-
+              //System.out.println(message);
             }
           }
         }
@@ -198,6 +224,7 @@ public class Bitmap {
   public void constructNewBitmap() {
     for (int i = 0; i < blockY * 8; i++) {
       for (int j = 0; j < blockX * 8; j++) {
+        blocks[i / 8][j / 8].constructNewBlock();
         colorData[i][j] = blocks[i / 8][j / 8].data[i % 8][j % 8];
       }
     }

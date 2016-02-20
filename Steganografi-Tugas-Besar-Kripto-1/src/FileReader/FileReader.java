@@ -7,12 +7,16 @@ package FileReader;
 import Bitmap.Bitmap;
 import Bitmap.Plane;
 import Message.StringBlock;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
     import java.nio.file.Files;
     import java.nio.file.Paths;
     import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -37,25 +41,23 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("testcase.bmp");
+            Path path = Paths.get("stegano.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
             double threshold = 0.01;
             
             Bitmap a = new Bitmap(rawData);
-            System.out.println(a.getMaximumSize(threshold));
+            System.out.println(a.getMessage(threshold));
+            //System.out.println(a.getMaximumSize(threshold));
             /*
             if (a.insertMessage(new StringBlock("Yoga Adrian Saputra", threshold), threshold)) {
               System.out.println("Success");
             } else {
               System.out.println("Gagal");
             }
-            String mess=a.getMessage(threshold);
-            System.out.println(mess);
-*/
             
-            /*for (int i=0; i < rawData.length; i++)
-                System.out.println((rawData[i]));*/
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(a.extractBitmap()));
+            ImageIO.write(image, "BMP", new File("stegano.bmp"));*/
             
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
