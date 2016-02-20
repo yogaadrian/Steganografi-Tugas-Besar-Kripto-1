@@ -41,7 +41,7 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("testcase.bmp");
+            Path path = Paths.get("simple.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
             double threshold = 0.01;

@@ -36,12 +36,16 @@ public class Bitmap {
     height = hexToInt(data[22], data[23], data[24], data[25]);
     bpp = hexToInt(data[28], data[29], 0, 0) / 8;
     padding = (width * bpp) % 4;
-    colorData = new int[height + (8 - (height % 8))][width + (8 - (width % 8))];
+    
+    blockY = (int) Math.ceil(height / 8.0);
+    blockX = (int) Math.ceil(width / 8.0);
+
+    colorData = new int[blockY * 8][blockX * 8];
 
     /* Creating Array of Color Only Data */
     int x = colorStart;
-    for (int i = 0; i < height + (8 - (height % 8)); i++) {
-      for (int j = 0; j < width + (8 - (width % 8)); j++) {
+    for (int i = 0; i < blockY * 8; i++) {
+      for (int j = 0; j < blockX * 8; j++) {
         if ((i < height) && (j < width)) {
           int[] p = new int[4];
           Arrays.fill(p, 0);
@@ -59,9 +63,6 @@ public class Bitmap {
       x = x + padding;
     }
 
-    blockY = (int) Math.ceil(height / 8.0);
-    blockX = (int) Math.ceil(width / 8.0);
-
     blocks = new Block[blockY][blockX];
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
@@ -74,8 +75,8 @@ public class Bitmap {
     System.out.println("======");
     System.out.println("");
 
-    for (int i = 0; i < height + (8 - (height % 8)); i++) {
-      for (int j = 0; j < width + (8 - (width % 8)); j++) {
+    for (int i = 0; i < blockY * 8; i++) {
+      for (int j = 0; j < blockX * 8; j++) {
         System.out.println(colorData[i][j]);
       }
     }
@@ -108,18 +109,28 @@ public class Bitmap {
   
   public byte[] extractBitmap() {
     byte[] newBitmap = new byte[colorStart 
-                                + (( height + (8 - (height % 8))) * ( width + (8 - (width % 8)))) * bpp ];
+                                + (blockY * 8) * ( blockX * 8 ) * bpp ];
     
     /* Copy Header */
     for (int i = 0; i < colorStart; i++) {
       newBitmap[i] = rawData[i];
     }
     
+    byte[] temp;
+    temp = intToHex(blockX * 8);
+    for (int i = 0; i < 4; i++) {
+      newBitmap[18+i] = temp[i];
+    }
+    temp = intToHex(blockY * 8);
+    for (int i = 0; i < 4; i++) {
+      newBitmap[22+i] = temp[i];
+    }
+    
     /* Mulai Color */
     int bit = colorStart;
-    for (int i = 0; i < ( height + (8 - (height % 8))); i++) {
-      for (int j = 0; j < ( width + (8 - (width % 8))); j++) {
-        byte[] temp = intToHex(colorData[i][j]);
+    for (int i = 0; i < blockY * 8; i++) {
+      for (int j = 0; j < blockX * 8; j++) {
+        temp = intToHex(colorData[i][j]);
         for (int b = 0; b < bpp; b++) {
           newBitmap[bit] = temp[b]; 
           bit++;
