@@ -13,8 +13,9 @@ public class Plane {
   int size;
   double complexity;
   public char[][] data;
+  public String detectedString = "";
   
-  public Plane(int i, int[][] block, int size) {
+  public Plane(int i, int[][] block, int size, double complexity) {
     this.size = size;
     data = new char[size][size]; 
     
@@ -32,6 +33,16 @@ public class Plane {
     
     toCGC();    
     calculateComplexity();
+    
+    if (getComplexity() > complexity) {      
+      for (int l = 0; l < size; l++) {
+        String biner = "";
+        for (int m = 0; m < size; m++) {
+          biner = biner.concat(Character.toString(data[l][m]));
+        }
+        detectedString = detectedString.concat(Character.toString((char) Integer.parseInt(biner, 2)));
+      }
+    }
   }
   
   public Plane(int i, String message, int size) {

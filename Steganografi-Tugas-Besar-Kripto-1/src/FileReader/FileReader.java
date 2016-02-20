@@ -47,7 +47,7 @@ public class FileReader {
             
             double threshold = 0.3;
             
-            Bitmap a = new Bitmap(rawData);
+            Bitmap a = new Bitmap(rawData, threshold);
             System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
             /*

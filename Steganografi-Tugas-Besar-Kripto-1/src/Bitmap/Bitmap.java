@@ -28,7 +28,7 @@ public class Bitmap {
   public int blockX;
   public int blockY;
 
-  public Bitmap(byte[] data) {
+  public Bitmap(byte[] data, double complexity) {
     rawData = data;
 
     colorStart = hexToInt(data[10], data[11], data[12], data[13]);
@@ -66,7 +66,7 @@ public class Bitmap {
     blocks = new Block[blockY][blockX];
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
-        blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp);
+        blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp, complexity);
         //blocks[i][j].print();
       }
     }
@@ -204,18 +204,7 @@ public class Bitmap {
     String message = "";
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
-        for (int k = 0; k < blocks[i][j].planes.length; k++) {
-          if (blocks[i][j].planes[k].getComplexity() > threshold) {
-            for (int l = 0; l < blocks[i][j].planes[k].size; l++) {
-              String biner = "";
-              for (int m = 0; m < blocks[i][j].planes[k].size; m++) {
-                biner = biner.concat(Character.toString(blocks[i][j].planes[k].data[l][m]));
-              }
-              message = message.concat(Character.toString((char) Integer.parseInt(biner, 2)));
-              //System.out.println(message);
-            }
-          }
-        }
+        message += blocks[i][j].detectedString;
       }
     }
     return message;

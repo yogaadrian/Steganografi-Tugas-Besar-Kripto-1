@@ -15,8 +15,9 @@ public class Block {
   int data[][];
   int lastInsert = -1;
   public Plane[] planes;
+  public String detectedString = "";
   
-  public Block(int i, int j, int[][] colorData, int bpp) {
+  public Block(int i, int j, int[][] colorData, int bpp, double complexity) {
     int x = 0;
     int y = 0;
     this.bpp = bpp; 
@@ -37,7 +38,10 @@ public class Block {
     planes = new Plane[bpp * size];
     
     for(int a=0; a < bpp * size; a++) {
-      planes[a] = new Plane(a, data, size);
+      planes[a] = new Plane(a, data, size, complexity);
+      if (planes[a].getComplexity() > complexity) {
+        detectedString += planes[a].detectedString;
+      }
     }
   }
   
