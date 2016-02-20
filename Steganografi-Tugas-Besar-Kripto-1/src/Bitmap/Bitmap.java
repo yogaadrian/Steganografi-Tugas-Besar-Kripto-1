@@ -126,6 +126,8 @@ public class Bitmap {
         }
       }
     }
+    
+    return newBitmap;
   }
 
   public int getMaximumSize(double threshold) {

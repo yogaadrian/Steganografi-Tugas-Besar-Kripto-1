@@ -7,12 +7,16 @@ package FileReader;
 import Bitmap.Bitmap;
 import Bitmap.Plane;
 import Message.StringBlock;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
     import java.nio.file.Files;
     import java.nio.file.Paths;
     import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -43,7 +47,11 @@ public class FileReader {
             double threshold = 0.01;
             
             Bitmap a = new Bitmap(rawData);
-            System.out.println(a.getMaximumSize(threshold));
+            
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(a.extractBitmap()));
+            ImageIO.write(image, "BMP", new File("stegano.bmp"));
+            
+            //System.out.println(a.getMaximumSize(threshold));
             /*
             if (a.insertMessage(new StringBlock("Yoga Adrian Saputra", threshold), threshold)) {
               System.out.println("Success");
