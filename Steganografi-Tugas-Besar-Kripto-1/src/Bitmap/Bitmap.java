@@ -222,9 +222,14 @@ public class Bitmap {
   }
 
   public void constructNewBitmap() {
+    for (int i = 0; i < blockY; i++) {
+      for (int j = 0; j < blockX; j++) {
+        blocks[i][j].constructNewBlock();
+      }
+    }
+    
     for (int i = 0; i < blockY * 8; i++) {
       for (int j = 0; j < blockX * 8; j++) {
-        blocks[i / 8][j / 8].constructNewBlock();
         colorData[i][j] = blocks[i / 8][j / 8].data[i % 8][j % 8];
       }
     }

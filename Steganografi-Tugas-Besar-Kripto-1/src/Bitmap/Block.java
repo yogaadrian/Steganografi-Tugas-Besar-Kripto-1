@@ -38,7 +38,6 @@ public class Block {
     
     for(int a=0; a < bpp * size; a++) {
       planes[a] = new Plane(a, data, size);
-      //planes[a].print();
     }
   }
   
@@ -51,7 +50,7 @@ public class Block {
         for(int a = 0; a < bpp * size; a++) {
           binary = planes[a].getBitFromBlock(x, y) + binary;
         } 
-        
+
         data[y][x] = Integer.parseInt(binary,2);
       }
     }
@@ -86,7 +85,7 @@ public class Block {
   }
   
   public void convertAllToPBC() {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size * bpp; i++) {
       planes[i].toPBC();
     }
   }

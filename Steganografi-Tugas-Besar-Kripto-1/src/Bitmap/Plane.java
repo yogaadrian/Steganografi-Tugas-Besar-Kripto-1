@@ -12,7 +12,7 @@ package Bitmap;
 public class Plane {
   int size;
   double complexity;
- public char[][] data;
+  public char[][] data;
   
   public Plane(int i, int[][] block, int size) {
     this.size = size;
@@ -21,6 +21,7 @@ public class Plane {
     for (int y = 0; y < size; y++) {
       for (int x = 0; x < size; x++) {
         String binary = Integer.toString(block[y][x], 2);
+        
         if (binary.length() - i - 1 < 0) {
           data[y][x] = '0';
         } else {
