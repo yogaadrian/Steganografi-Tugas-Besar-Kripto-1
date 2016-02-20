@@ -14,7 +14,7 @@ public class Block {
   int bpp; /*in Byte*/
   int data[][];
   int lastInsert = -1;
-  Plane[] planes;
+  public Plane[] planes;
   
   public Block(int i, int j, int[][] colorData, int bpp) {
     int x = 0;
