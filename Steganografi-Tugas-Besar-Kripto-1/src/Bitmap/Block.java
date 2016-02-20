@@ -70,6 +70,12 @@ public class Block {
     return success;
   }
   
+  public void convertAllToPBC() {
+    for (int i = 0; i < size; i++) {
+      planes[i].toPBC();
+    }
+  }
+  
   public void print() {
     for (int i = 0; i < size; i++) {
       System.out.print("[");

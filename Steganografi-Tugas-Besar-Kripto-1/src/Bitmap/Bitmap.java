@@ -119,8 +119,16 @@ public class Bitmap {
                 stillTrying = false;
             }
         }
-
+       
         return (successPlane == message.getPlaneNumber());
+    }
+    
+    private void convertAllToPBC() {
+      for (int block = 0; block < (blockX * blockY); block++) {
+        int y = block / blockY;
+        int x = block - (y * block);
+        blocks[y][x].convertAllToPBC();
+      }
     }
 
     public int getColorStart() {
