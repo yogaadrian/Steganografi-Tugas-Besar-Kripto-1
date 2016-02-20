@@ -41,13 +41,14 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("testcase.bmp");
+            //Path path = Paths.get("Lenna.bmp");
+            Path path = Paths.get("stegano.bmp");
             byte[] rawData = Files.readAllBytes(path);
             
-            double threshold = 0.01;
+            double threshold = 0.3;
             
             Bitmap a = new Bitmap(rawData);
-            //System.out.println(a.getMessage(threshold));
+            System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
             /*
             if (a.insertMessage(new StringBlock("Yoga Adrian Saputra", threshold), threshold)) {
@@ -55,10 +56,10 @@ public class FileReader {
             } else {
               System.out.println("Gagal");
             }
-            */
+            
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(a.extractBitmap()));
             ImageIO.write(image, "BMP", new File("stegano.bmp"));
-            
+            */
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
