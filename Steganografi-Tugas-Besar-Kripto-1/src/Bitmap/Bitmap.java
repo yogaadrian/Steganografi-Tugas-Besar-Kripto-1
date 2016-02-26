@@ -304,4 +304,22 @@ public class Bitmap {
       }
     }
   }
+  
+  public float calculatepsnr(Bitmap bitmap){
+      
+      int sum=0;
+      for(int i=0;i<height;i++){
+          for(int j=0;j<width;j++){
+              for(int k=0;k<bpp;k++){
+              }
+              sum=(int) (sum+Math.pow((colorData[i][j]%256-bitmap.colorData[i][j]%256),2.0));
+              sum=(int) (sum+Math.pow(((colorData[i][j]/256)%256-(bitmap.colorData[i][j]/256)%256),2.0));
+              sum=(int) (sum+Math.pow(((colorData[i][j]/(256*256))%256-(bitmap.colorData[i][j]/(256*256))%256),2.0));
+              sum=(int) (sum+Math.pow(((colorData[i][j]/(256*256*256))%256-(bitmap.colorData[i][j]/(256*256*256))%256),2.0));
+          }
+      }
+      float rms=(float) Math.sqrt(1.0/(width*height*bpp)*sum);
+      float psnr=(float) (20*Math.log10(256/rms));
+      return psnr;
+  }
 }
