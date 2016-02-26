@@ -31,7 +31,7 @@ public class StringBlock {
       if ( planes[i].getComplexity() < threshold ) {
         planes[i].conjugate();
         conjugateMap.add(i);
-        System.out.println("Conjugate - " + i);
+        System.out.println("conjugate");
       }
     }
   }  

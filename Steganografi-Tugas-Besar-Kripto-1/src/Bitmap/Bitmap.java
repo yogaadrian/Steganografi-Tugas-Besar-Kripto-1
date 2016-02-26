@@ -30,6 +30,7 @@ public class Bitmap {
   public int blockY;
 
   private byte[] conjugateBlock = new byte[0];
+  private int messageLength = 0;
 
   public String detectedString = "";
 
@@ -47,6 +48,27 @@ public class Bitmap {
 
     colorData = new int[blockY * 8][blockX * 8];
 
+    /* Get Conjugate Map */
+    int headerSize = hexToInt(data[14], data[15], data[16], data[17]);
+
+    if ( colorStart - (headerSize + 14 + 4) > 0 ) {
+      conjugateBlock = new byte[colorStart - (headerSize + 14 + 4)];
+    } else {
+      conjugateBlock = new byte[0];
+    }
+
+    int n = 0;
+    
+    for (int i = headerSize + 14; i < colorStart; i++ ) {
+      if ( i == headerSize + 14 ) {
+        messageLength = hexToInt(data[i], data[i+1], data[i+2], data[i+3]);
+        i = i + 3;
+      } else {
+        conjugateBlock[n] = data[i];
+        ++n;
+      }
+    }
+    
     /* Creating Array of Color Only Data */
     int x = colorStart;
     for (int i = 0; i < blockY * 8; i++) {
@@ -74,12 +96,17 @@ public class Bitmap {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp, complexity);
 
         detectedString += blocks[i][j].detectedString;
+        
       }
     }
   }
 
   private int hexToInt(int a, int b, int c, int d) {
     /* Little Endian */
+    a = a & 0x000000FF;
+    b = b & 0x000000FF;
+    c = c & 0x000000FF;
+    d = d & 0x000000FF;
     return a
       + (b / 16) * 16 * 16 * 16 + (b % 16) * 16 * 16
       + (c / 16) * 16 * 16 * 16 * 16 * 16 + (c % 16) * 16 * 16 * 16 * 16
@@ -120,7 +147,7 @@ public class Bitmap {
     constructNewBitmap();
     byte[] newBitmap = new byte[colorStart
       + ( (blockY * 8) * (blockX * 8) * bpp )
-      + conjugateBlock.length ];
+      + conjugateBlock.length + 4 ];
 
     /* Copy Header */
     for (int i = 0; i < colorStart; i++) {
@@ -141,7 +168,7 @@ public class Bitmap {
     /* Kalo ada Conjugate Map ini keubah */
     int newSize = hexToInt(newBitmap[2], newBitmap[3], newBitmap[4], newBitmap[5]) + conjugateBlock.length;
     int oldColorStart = colorStart;
-    colorStart = colorStart + conjugateBlock.length;
+    colorStart = colorStart + conjugateBlock.length + 4;
     int newHeaderSize = hexToInt(newBitmap[14], newBitmap[15], newBitmap[16], newBitmap[17]) + conjugateBlock.length;
     
     byte[] bNewSize = intToHex(newSize);
@@ -155,8 +182,10 @@ public class Bitmap {
       newBitmap[10+i] = bColorStart[0+i];
     }
     
+    System.arraycopy(intToHex(messageLength), 0, newBitmap, (oldColorStart), 4);
+   
     /* Masukin Conjugate Map nya */
-    System.arraycopy(conjugateBlock, 0, newBitmap, oldColorStart, conjugateBlock.length);
+    System.arraycopy(conjugateBlock, 0, newBitmap, (oldColorStart+4), conjugateBlock.length);
     
     /* Mulai Color */
     int bit = colorStart;
@@ -169,7 +198,7 @@ public class Bitmap {
         }
       }
     }
-
+   
     return newBitmap;
   }
 
@@ -215,14 +244,15 @@ public class Bitmap {
     }
     
     conjugateBlock = createConjugateBlock(message.conjugateMap, message.planenumber);
-
+    messageLength = message.planenumber;
+    
     return (successPlane == message.getPlaneNumber());
   }
 
   private void convertAllToPBC() {
     for (int block = 0; block < (blockX * blockY); block++) {
       int y = block / blockY;
-      int x = block - (y * block);
+      int x = block - (y * blockY);
       blocks[y][x].convertAllToPBC();
     }
   }
@@ -244,7 +274,21 @@ public class Bitmap {
   }
 
   public String getMessage(double threshold) {
-    return detectedString;
+    StringBlock sb = new StringBlock(detectedString.substring(0, messageLength * 8), 0);
+    
+    for (int i = 0; i < conjugateBlock.length; i++) {
+      int temp = hexToInt(conjugateBlock[i], conjugateBlock[i+1], conjugateBlock[i+2], conjugateBlock[i+3]);
+       sb.getPlane(temp).conjugate();
+      i += 3;
+    }
+    
+    String ret = "";
+    for (int i = 0; i < sb.getPlaneNumber(); i++) {
+      sb.getPlane(i).genereateString();
+      ret = ret + sb.getPlane(i).detectedString;
+    }
+    
+    return ret;
   }
 
   public void constructNewBitmap() {

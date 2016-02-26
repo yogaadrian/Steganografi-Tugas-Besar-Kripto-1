@@ -11,6 +11,7 @@ import static crypter.tucil.pkg1.CrypterTucil1.encrypt;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
     import java.nio.file.Files;
     import java.nio.file.Paths;
@@ -52,7 +53,7 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("Lenna.bmp");
+            Path path = Paths.get("stegano2.bmp");
             //Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
             /*for(int i=0;i<rawData.length;i++){
@@ -60,26 +61,27 @@ public class FileReader {
             }*/
             
             String content="";
-            content=FileToString("tubes.doc");
-            System.out.println(content);
-            System.out.println("------------------------------------------------------");
-            String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
-            System.out.println(newcontent);
+            content=FileToString("aa.txt");
+            
+            //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
             double threshold = 0.3;
             
             Bitmap a = new Bitmap(rawData, threshold);
             //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
-            
-            if (a.insertMessage(new StringBlock(newcontent, threshold), threshold)) {
+            /*
+            if (a.insertMessage(new StringBlock(content, threshold), threshold)) {
               System.out.println("Success");
             } else {
               System.out.println("Gagal");
             }
             
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(a.extractBitmap()));
-            ImageIO.write(image, "BMP", new File("okok.bmp"));
+            FileOutputStream fos = new FileOutputStream("stegano2.bmp");
+            fos.write(a.extractBitmap());
+            fos.close();
             
+            */
+            System.out.println("msg: " + a.getMessage(threshold));
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }

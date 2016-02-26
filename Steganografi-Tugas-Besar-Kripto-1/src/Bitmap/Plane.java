@@ -28,6 +28,7 @@ public class Plane {
         } else {
           data[y][x] = binary.charAt(binary.length() - i - 1);
         }
+
       }
     }
     
@@ -70,6 +71,16 @@ public class Plane {
     calculateComplexity();
   }
   
+  public void genereateString() {
+    for (int l = 0; l < size; l++) {
+      String biner = "";
+      for (int m = 0; m < size; m++) {
+        biner = biner.concat(Character.toString(data[l][m]));
+      }
+      detectedString = detectedString.concat(Character.toString((char) Integer.parseInt(biner, 2)));
+    }
+  }
+  
   public char getBitFromBlock(int x, int y) {
     return data[y][x];
   }
@@ -84,7 +95,7 @@ public class Plane {
   
   private void calculateComplexity() {
     int point = 0;
-    
+
     for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {
         if ( data[i][j] == '1' ) {
@@ -110,6 +121,7 @@ public class Plane {
     }
     
     complexity = (double) point / ( ( ( size * size ) / 2 ) * 4 - ( 2 * size ) );
+ 
   }
   
   public void toCGC() {
@@ -144,17 +156,23 @@ public class Plane {
     char[][] Wc;
     Wc = new char[size][size];
     
-    for (int x = 0; x < size; x++) {
-      for (int y = 0; y < size; y++) {
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
         Wc[y][x] = (((x+y)%2) == 0) ? '0' : '1';
       }
     }
     
-    for (int x = 0; x < size; x++) {
-      for (int y = 0; y < size; y++) {
-        data[y][x] = ( data[y][x] == Wc[y][x] ) ? '0' : '1';
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        if ( data[y][x] == Wc[y][x] ) {
+          data[y][x] = '0';
+        } else {
+          data[y][x] = '1';
+        }
       }
-    }    
+    }
+    
+    calculateComplexity();
   }
   
   public void changeData(char[][] newData) {

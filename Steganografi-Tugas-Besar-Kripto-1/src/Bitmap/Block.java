@@ -17,6 +17,8 @@ public class Block {
   public Plane[] planes;
   public String detectedString = "";
   
+  int inserted = 0;
+  
   public Block(int i, int j, int[][] colorData, int bpp, double complexity) {
     int x = 0;
     int y = 0;
@@ -43,6 +45,7 @@ public class Block {
         detectedString += planes[a].detectedString;
       }
     }
+    
   }
   
   public void constructNewBlock() {
@@ -72,14 +75,14 @@ public class Block {
     int i = lastInsert + 1;
     boolean success = false;
     
-    while (i < size * bpp) {
+    while ( (i < size * bpp) ) {
       if (planes[i].getComplexity() > threshold) {
         planes[i].changeData(message.getData());
         success = true;
         lastInsert = i;
-        //System.out.println("Changed Plane " + i);
 
-        i = size * bpp;
+        ++inserted;
+        i = (size * bpp) + 1; // keluar
       } else {
         ++i;
       }      
