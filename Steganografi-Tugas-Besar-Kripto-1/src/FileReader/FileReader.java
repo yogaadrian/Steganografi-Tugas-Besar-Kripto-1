@@ -53,29 +53,30 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            Path path = Paths.get("Lenna.bmp");
+            boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
+            Path path = Paths.get("Lenna2.bmp");
             //Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
             
-            Path path1 = Paths.get("stegano2.bmp");
+            //Path path1 = Paths.get("Lenna.bmp");
             //Path path = Paths.get("tucil2.doc");
-            byte[] rawData1 = Files.readAllBytes(path1);
+            //byte[] rawData1 = Files.readAllBytes(path1);
             /*for(int i=0;i<rawData.length;i++){
                 System.out.println(hex((int)rawData[i]));
             }*/
             
-            //String content="";
-            //content=FileToString("tucil2.doc");
+            String content="";
+            content=FileToString("tucil2.doc");
             
             //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
-            double threshold = 0.3;
+            double threshold = 0.5;
             
             Bitmap a = new Bitmap(rawData, threshold);
-            Bitmap b = new Bitmap(rawData1, threshold);
-            System.out.println(a.calculatepsnr(b));
+            //Bitmap b = new Bitmap(rawData1, threshold);
+            //System.out.println(a.calculatepsnr(b));
             //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
-            /*
+            ///*
             if (a.insertMessage(new StringBlock(content, threshold), threshold)) {
               System.out.println("Success");
             } else {
@@ -86,7 +87,7 @@ public class FileReader {
             fos.write(a.extractBitmap());
             fos.close();
             
-            */
+            //*/
             //System.out.println("msg: " + a.getMessage(threshold));
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
