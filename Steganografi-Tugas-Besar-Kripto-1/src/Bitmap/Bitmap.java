@@ -6,6 +6,7 @@
 package Bitmap;
 
 import Message.StringBlock;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -27,7 +28,9 @@ public class Bitmap {
   public Block[][] blocks;
   public int blockX;
   public int blockY;
-  
+
+  private byte[] conjugateBlock = new byte[0];
+
   public String detectedString = "";
 
   public Bitmap(byte[] data, double complexity) {
@@ -38,7 +41,7 @@ public class Bitmap {
     height = hexToInt(data[22], data[23], data[24], data[25]);
     bpp = hexToInt(data[28], data[29], 0, 0) / 8;
     padding = (width * bpp) % 4;
-    
+
     blockY = (int) Math.ceil(height / 8.0);
     blockX = (int) Math.ceil(width / 8.0);
 
@@ -69,7 +72,7 @@ public class Bitmap {
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp, complexity);
-        
+
         detectedString += blocks[i][j].detectedString;
       }
     }
@@ -82,43 +85,78 @@ public class Bitmap {
       + (c / 16) * 16 * 16 * 16 * 16 * 16 + (c % 16) * 16 * 16 * 16 * 16
       + (d / 16) * 16 * 16 * 16 * 16 * 16 * 16 * 16 + (d % 16) * 16 * 16 * 16 * 16 * 16 * 16;
   }
-  
-  private byte[] intToHex(int a){
+
+  private byte[] intToHex(int a) {
     int[] arr = new int[4];
-    
-    arr[0]= a % (16*16);
-    arr[1]= a / (16 * 16) % (16 * 16) ;
-    arr[2]= a / (16 * 16 * 16 * 16) % (16 * 16);
-    arr[3]= a /(16 * 16 * 16 * 16 * 16 * 16) % (16 * 16);
-    
-    byte[] arrbyte= new byte[4];
-    arrbyte[0]=(byte) arr[0];
-    arrbyte[1]=(byte) arr[1];
-    arrbyte[2]=(byte) arr[2];
-    arrbyte[3]=(byte) arr[3];
-    
+
+    arr[0] = a % (16 * 16);
+    arr[1] = a / (16 * 16) % (16 * 16);
+    arr[2] = a / (16 * 16 * 16 * 16) % (16 * 16);
+    arr[3] = a / (16 * 16 * 16 * 16 * 16 * 16) % (16 * 16);
+
+    byte[] arrbyte = new byte[4];
+    arrbyte[0] = (byte) arr[0];
+    arrbyte[1] = (byte) arr[1];
+    arrbyte[2] = (byte) arr[2];
+    arrbyte[3] = (byte) arr[3];
+
     return arrbyte;
   }
-  
+
+  public byte[] createConjugateBlock(ArrayList<Integer> conjugateMap, int planenumber) {
+    byte[] b = new byte[conjugateMap.size() * 4];
+    for (int i = 0; i < conjugateMap.size(); i++) {
+      byte[] temp = new byte[4];
+      temp=intToHex(conjugateMap.get(i));
+      b[i*4]=temp[0];
+      b[i*4+1]=temp[1];
+      b[i*4+2]=temp[2];
+      b[i*4+3]=temp[3];
+    }
+    return b;
+  }
+
   public byte[] extractBitmap() {
     constructNewBitmap();
-    byte[] newBitmap = new byte[colorStart 
-                                + (blockY * 8) * ( blockX * 8 ) * bpp ];
-    
+    byte[] newBitmap = new byte[colorStart
+      + ( (blockY * 8) * (blockX * 8) * bpp )
+      + conjugateBlock.length ];
+
     /* Copy Header */
     for (int i = 0; i < colorStart; i++) {
       newBitmap[i] = rawData[i];
     }
-    
+
+    /* Ubah ukuran Gambar */
     byte[] temp;
     temp = intToHex(blockX * 8);
     for (int i = 0; i < 4; i++) {
-      newBitmap[18+i] = temp[i];
+      newBitmap[18 + i] = temp[i];
     }
     temp = intToHex(blockY * 8);
     for (int i = 0; i < 4; i++) {
-      newBitmap[22+i] = temp[i];
+      newBitmap[22 + i] = temp[i];
     }
+    
+    /* Kalo ada Conjugate Map ini keubah */
+    int newSize = hexToInt(newBitmap[2], newBitmap[3], newBitmap[4], newBitmap[5]) + conjugateBlock.length;
+    int oldColorStart = colorStart;
+    colorStart = colorStart + conjugateBlock.length;
+    int newHeaderSize = hexToInt(newBitmap[14], newBitmap[15], newBitmap[16], newBitmap[17]) + conjugateBlock.length;
+    
+    byte[] bNewSize = intToHex(newSize);
+    byte[] bColorStart = intToHex(colorStart);
+    //byte[] bNewHeaderSize = intToHex(newHeaderSize);
+
+    for (int i = 0; i < 4; i++) {
+      newBitmap[2+i] = bNewSize[0+i];
+    }
+    for (int i = 0; i < 4; i++) {
+      newBitmap[10+i] = bColorStart[0+i];
+    }
+    
+    /* Masukin Conjugate Map nya */
+    System.arraycopy(conjugateBlock, 0, newBitmap, oldColorStart, conjugateBlock.length);
     
     /* Mulai Color */
     int bit = colorStart;
@@ -126,12 +164,12 @@ public class Bitmap {
       for (int j = 0; j < blockX * 8; j++) {
         temp = intToHex(colorData[i][j]);
         for (int b = 0; b < bpp; b++) {
-          newBitmap[bit] = temp[b]; 
+          newBitmap[bit] = temp[b];
           bit++;
         }
       }
     }
-    
+
     return newBitmap;
   }
 
@@ -153,14 +191,14 @@ public class Bitmap {
     for (int i = 0; i < message.getPlaneNumber(); i++) {
       boolean stillTrying = true;
       int y = block / blockY;
-      int x = block - (y * block);
+      int x = block - (y * blockY);
 
       if (y < blockY) {
         while (!blocks[y][x].insertMessagePlane(message.getPlane(i), threshold) && stillTrying) {
           ++block;
 
           y = block / blockY;
-          x = block - (y * block);
+          x = block - (y * blockY);
 
           if (y >= blockY) {
             stillTrying = false;
@@ -175,6 +213,8 @@ public class Bitmap {
         stillTrying = false;
       }
     }
+    
+    conjugateBlock = createConjugateBlock(message.conjugateMap, message.planenumber);
 
     return (successPlane == message.getPlaneNumber());
   }
@@ -213,7 +253,7 @@ public class Bitmap {
         blocks[i][j].constructNewBlock();
       }
     }
-    
+
     for (int i = 0; i < blockY * 8; i++) {
       for (int j = 0; j < blockX * 8; j++) {
         colorData[i][j] = blocks[i / 8][j / 8].data[i % 8][j % 8];

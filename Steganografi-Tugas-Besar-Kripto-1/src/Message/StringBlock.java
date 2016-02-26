@@ -1,6 +1,7 @@
 package Message;
 
 import Bitmap.Plane;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,9 +15,10 @@ import Bitmap.Plane;
  */
 public class StringBlock {
   int size;
-  int planenumber;
+  public int planenumber;
   String data;
   Plane[] planes;
+  public ArrayList<Integer> conjugateMap = new ArrayList();
   
   public StringBlock(String data, double threshold) {
     size = 8;
@@ -26,8 +28,11 @@ public class StringBlock {
     
     for ( int i = 0; i < planenumber; i++ ) {
       planes[i] = new Plane(i, data, size);
-      if ( planes[i].getComplexity() < threshold ) planes[i].conjugate();
-      //planes[i].print();
+      if ( planes[i].getComplexity() < threshold ) {
+        planes[i].conjugate();
+        conjugateMap.add(i);
+        System.out.println("Conjugate - " + i);
+      }
     }
   }  
   
