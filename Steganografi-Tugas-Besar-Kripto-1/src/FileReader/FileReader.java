@@ -7,6 +7,7 @@ package FileReader;
 import Bitmap.Bitmap;
 import Bitmap.Plane;
 import Message.StringBlock;
+import static crypter.tucil.pkg1.CrypterTucil1.encrypt;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -38,17 +39,35 @@ public class FileReader {
     return hex(Float.floatToRawIntBits(f));
     }
     
+    public static String FileToString(String stringpath) throws IOException{
+        String content="";
+        Path path=Paths.get(stringpath);
+        byte[] rawData = Files.readAllBytes(path);
+        for(int i=0;i<rawData.length;i++){
+            content=content.concat(Character.toString((char)rawData[i]));
+        }
+        return content;
+    }
+    
     public static void main(String[] args) {
 
         try {
             //Path path = Paths.get("testcase.bmp");
-            Path path = Paths.get("stegano.bmp");
+            /*Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
+            for(int i=0;i<rawData.length;i++){
+                System.out.println(hex((int)rawData[i]));
+            }*/
+            String content="";
+            content=FileToString("tucil2.doc");
+            System.out.println(content);
+            System.out.println("------------------------------------------------------");
+            String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
+            System.out.println(newcontent);
+            //double threshold = 0.01;
             
-            double threshold = 0.01;
-            
-            Bitmap a = new Bitmap(rawData, threshold);
-            System.out.println(a.getMessage(threshold));
+            //Bitmap a = new Bitmap(rawData, threshold);
+            //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
             /*
             if (a.insertMessage(new StringBlock("Yoga Adrian Saputra", threshold), threshold)) {
