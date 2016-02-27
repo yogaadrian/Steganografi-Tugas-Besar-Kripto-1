@@ -5,10 +5,26 @@
  */
 package Main;
 
+import Bitmap.Bitmap;
+import Crypter.CrypterTucil1;
+import Crypter.Decrypt;
+import FileReader.FileReader;
+import FileReader.FileReader;
+import FileReader.ImageConverter;
+import Message.StringBlock;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -55,13 +71,24 @@ public class MainMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
+        jRadioButton4 = new javax.swing.JRadioButton();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         btn_openImage = new javax.swing.JButton();
         imageNameInput = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btn_openImage1 = new javax.swing.JButton();
+        imageNameInput1 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jButton3 = new javax.swing.JButton();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -72,43 +99,64 @@ public class MainMenu extends javax.swing.JFrame {
         jTextField1.setEnabled(false);
 
         jButton1.setText("Select File");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jRadioButton1.setText("No Cipher");
         jRadioButton1.setToolTipText("");
         jRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("Vigenere");
-        jRadioButton2.setToolTipText("");
-        jRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButton4.setSelected(true);
+        jRadioButton4.setText("Vigenere");
+        jRadioButton4.setToolTipText("");
+        jRadioButton4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
-                .add(jRadioButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jRadioButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .add(jRadioButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(115, 115, 115))
+            .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(426, Short.MAX_VALUE)
+                    .add(jRadioButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(16, 16, 16)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jRadioButton1)
-                    .add(jRadioButton2)))
+                .addContainerGap(17, Short.MAX_VALUE)
+                .add(jRadioButton1))
+            .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .add(jRadioButton4)
+                    .addContainerGap(10, Short.MAX_VALUE)))
         );
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Key");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Input Your Hidden Messages");
 
         jButton2.setText("Start Stegano");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Key");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,7 +173,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton1))
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1Layout.createSequentialGroup()
-                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jTextField2)))
                 .addContainerGap())
@@ -143,8 +191,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(jButton2))
         );
@@ -158,31 +206,127 @@ public class MainMenu extends javax.swing.JFrame {
 
         imageNameInput.setText("No Picture Selected");
 
+        jLabel3.setText("Insert Hidden Message to a Image");
+
+        jLabel4.setText("Extract Hidden Message From an Image");
+
+        btn_openImage1.setText("Select Image");
+        btn_openImage1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_openImage1ActionPerformed(evt);
+            }
+        });
+
+        imageNameInput1.setText("No Picture Selected");
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Key");
+
+        jRadioButton3.setText("No Cipher");
+        jRadioButton3.setToolTipText("");
+        jRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jRadioButton2.setSelected(true);
+        jRadioButton2.setText("Vigenere");
+        jRadioButton2.setToolTipText("");
+        jRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jButton3.setText("Extract Message");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jTextField4.setText("jTextField4");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("File Name");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(146, 146, 146)
-                .add(imageNameInput)
-                .add(183, 183, 183)
-                .add(btn_openImage, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
-                .add(89, 89, 89)
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .add(imageNameInput, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 385, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(27, 27, 27)
+                                .add(btn_openImage, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(layout.createSequentialGroup()
+                                .add(199, 199, 199)
+                                .add(jLabel3))
+                            .add(layout.createSequentialGroup()
+                                .add(180, 180, 180)
+                                .add(jLabel4))
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(layout.createSequentialGroup()
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                        .add(layout.createSequentialGroup()
+                                            .add(61, 61, 61)
+                                            .add(jRadioButton3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                            .add(jRadioButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                        .add(imageNameInput1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 385, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(18, 18, 18)
+                                    .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(layout.createSequentialGroup()
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(layout.createSequentialGroup()
+                                            .add(9, 9, 9)
+                                            .add(jLabel5))
+                                        .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                            .addContainerGap()
+                                            .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                    .add(18, 18, 18)
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(jTextField3)
+                                        .add(jTextField4)))))
+                        .add(29, 29, 29)))
                 .addContainerGap())
+            .add(layout.createSequentialGroup()
+                .add(224, 224, 224)
+                .add(jButton3)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(84, 84, 84)
+                .add(jLabel3)
+                .add(70, 70, 70)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(imageNameInput)
                     .add(btn_openImage, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(28, 28, 28)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .add(18, 18, 18)
+                .add(jLabel4)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(imageNameInput1)
+                    .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jRadioButton3)
+                    .add(jRadioButton2))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel5))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 23, Short.MAX_VALUE)
+                .add(jButton3))
         );
 
         pack();
@@ -219,12 +363,132 @@ public class MainMenu extends javax.swing.JFrame {
 
                     frame.setSize(500, 500);
                     frame.setVisible(true);
+                    imageNameInput.setText(input.getAbsolutePath());
                 } catch (IOException ex) {
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }//GEN-LAST:event_btn_openImageActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            boolean enc;
+            enc = jRadioButton4.isSelected();
+            boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
+            Path path = Paths.get(imageNameInput.getText());
+            //Path path = Paths.get("tucil2.doc");
+            byte[] rawData = Files.readAllBytes(path);
+            
+            //Path path1 = Paths.get("Lenna.bmp");
+            //Path path = Paths.get("tucil2.doc");
+            //byte[] rawData1 = Files.readAllBytes(path1);
+            /*for(int i=0;i<rawData.length;i++){
+                System.out.println(hex((int)rawData[i]));
+            }*/
+            
+            String content="";
+            
+            
+            content=FileToString(jTextField1.getText());
+            if (enc)
+                content = new CrypterTucil1().encrypt(content, jTextField2.getText(), 2, 1);
+            //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
+            double threshold = 0.5;
+            
+            Bitmap a = new Bitmap(rawData, threshold);
+            //Bitmap b = new Bitmap(rawData1, threshold);
+            //System.out.println(a.calculatepsnr(b));
+            //System.out.println(a.getMessage(threshold));
+            //System.out.println(a.getMaximumSize(threshold));
+            ///*
+            if (a.insertMessage(new StringBlock(content, threshold), jTextField2.getText(), threshold)) {
+              System.out.println("Success");
+            } else {
+              System.out.println("Gagal");
+            }
+            
+            FileOutputStream fos = new FileOutputStream("stegano2.bmp");
+            fos.write(a.extractBitmap());
+            fos.close();
+            
+            JFrame frame = new JFrame();
+            JLabel label = new JLabel();
+            Image imageInput;
+                    
+                    imageInput = ImageIO.read(new File("stegano2.bmp"));
+                    label.setIcon(new ImageIcon(imageInput));
+
+                    JLabel filesize = new JLabel();
+                    JLabel fileEx = new JLabel("File extension : ".concat(input.getName().substring(((int)input.getName().length())-3)));
+                    String fs = "File Size".concat(String.valueOf(input.length()).concat("bytes"));
+                    fileEx.setSize(300,300);
+                    fileEx.setLocation(300, 300);
+                    filesize.setLocation(300,275);
+                    filesize.setText(fs);
+                    filesize.setSize(300, 300);
+                    frame.add(filesize);
+                    frame.add(fileEx);
+                    frame.add(label);
+
+                    frame.setSize(500, 500);
+                    frame.setVisible(true);
+            
+            
+            //*/
+            //System.out.println("msg: " + a.getMessage(threshold));
+        } catch (IOException ex) {
+            Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooseFile = new JFileChooser();
+        chooseFile.showOpenDialog(null);
+        File f = chooseFile.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        jTextField1.setText(filename);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_openImage1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openImage1ActionPerformed
+        JFileChooser chooseFile = new JFileChooser();
+        chooseFile.showOpenDialog(null);
+        File f = chooseFile.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        imageNameInput1.setText(filename);
+    }//GEN-LAST:event_btn_openImage1ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        PrintWriter writer = null;
+        try {
+            // TODO add your handling code here:
+            String getImage = imageNameInput1.getText();
+            String fileName = jTextField4.getText();
+            String key = jTextField3.getText();
+            Decrypt a = new Decrypt(getImage,key, jRadioButton2.isSelected());
+            String message = a.mes;
+            writer = new PrintWriter(fileName, "UTF-8");
+            writer.println(message);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            writer.close();
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,17 +519,28 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser1;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_openImage;
+    private javax.swing.JButton btn_openImage1;
     private javax.swing.JLabel imageNameInput;
+    private javax.swing.JLabel imageNameInput1;
     private javax.swing.JFileChooser imageOpener;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
