@@ -120,7 +120,7 @@ public class FileReader {
           Path p2 = Paths.get(outputImagePath);
           byte[] inputP2 = Files.readAllBytes(p2);
           Bitmap bit2 = new Bitmap(inputP2, threshold);
-
+          System.out.println("ukuran maximum :"+ bit1.getMaximumSize(threshold));
           System.out.println(bit1.calculatepsnr(bit2));
           
       } catch (IOException ex) {
