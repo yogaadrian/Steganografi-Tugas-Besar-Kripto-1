@@ -11,6 +11,7 @@ import static crypter.tucil.pkg1.CrypterTucil1.encrypt;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
     import java.nio.file.Files;
@@ -61,6 +62,12 @@ public class FileReader {
         return getFileExtension(file);
     }
     
+    public static void savefile(String stringpath,byte[] content) throws FileNotFoundException, IOException{
+        FileOutputStream fos = new FileOutputStream(stringpath);
+            fos.write(content);
+            fos.close();
+    }
+    
     public static void main(String[] args) {
 
         try {
@@ -92,16 +99,14 @@ public class FileReader {
             //System.out.println(a.calculatepsnr(b));
             //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
-            /*
-            if (a.insertMessage(new StringBlock(content, threshold), threshold)) {
+            ///*
+            if (a.insertMessage(new StringBlock(content, threshold),"ok", threshold)) {
               System.out.println("Success");
             } else {
               System.out.println("Gagal");
             }
-            
-            FileOutputStream fos = new FileOutputStream("yarek.bmp");
-            fos.write(a.extractBitmap());
-            fos.close();
+        
+            savefile("stegano3.bmp",a.extractBitmap());
             
             //*/
             //System.out.println("msg: " + a.getMessage(threshold));
