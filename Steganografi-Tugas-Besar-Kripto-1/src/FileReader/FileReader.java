@@ -49,12 +49,24 @@ public class FileReader {
         }
         return content;
     }
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
+    
+    public static String GetExtension(String stringpath){
+        File file = new File(stringpath);
+        return getFileExtension(file);
+    }
     
     public static void main(String[] args) {
 
         try {
             //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
-            Path path = Paths.get("yarek.bmp");
+            Path path = Paths.get("Lenna.bmp");
+            System.out.println(GetExtension("Lenna.bmp"));
             //Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
             
@@ -72,7 +84,7 @@ public class FileReader {
             double threshold = 0.3;
             
             Bitmap a = new Bitmap(rawData, threshold);
-            a.decrypt(threshold, "ok");
+            //a.decrypt(threshold, "ok");
             
             //int[] seed = {890213, 19823312};
             //System.out.println("XORS: " + a.xorshiftplus(seed));
