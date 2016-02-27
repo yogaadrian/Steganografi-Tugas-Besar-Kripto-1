@@ -220,12 +220,26 @@ public class Bitmap {
     return seed[1] + y;
   }
   
+  private int[] keyToSeed(String key) {
+    int seed[] = new int[2];
+    int seed1 = 1234;
+    int seed2 = 4321;
+    
+    for (int i=0; i < key.length(); i++) {
+        seed2 += (int) key.charAt(i);
+        seed1 += (int) key.charAt(key.length() - i - 1) * 3;
+    }  
+    
+    seed[0] = seed1 * 17;
+    seed[1] = seed2 * 3;    
+    return seed;    
+  }
   
   public boolean insertMessage(StringBlock message, String key, double threshold) {
     int block = 0;
     int successPlane = 0;
     
-    int tempseed[] = {12314,901293};
+    int tempseed[] = keyToSeed(key);
 
     for (int i = 0; i < message.getPlaneNumber(); i++) {
       boolean stillTrying = true;
@@ -268,7 +282,7 @@ public class Bitmap {
 
   public void decrypt(double threshold, String key) {
     
-    int tempseed[] = {12314,901293};
+    int tempseed[] = keyToSeed(key);
     
     String message = "";
 
