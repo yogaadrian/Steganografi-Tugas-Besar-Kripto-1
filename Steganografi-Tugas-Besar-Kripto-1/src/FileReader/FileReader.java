@@ -113,6 +113,16 @@ public class FileReader {
             savefile(outputImagePath, inputImage.extractBitmap(GetExtension(inputFilePath)));
           }
           
+          /* Buat Laporan */
+          Path p1 = Paths.get(inputImagePath);
+          byte[] inputP1 = Files.readAllBytes(p1);
+          Bitmap bit1 = new Bitmap(inputP1, threshold);
+          Path p2 = Paths.get(outputImagePath);
+          byte[] inputP2 = Files.readAllBytes(p2);
+          Bitmap bit2 = new Bitmap(inputP2, threshold);
+
+          System.out.println(bit1.calculatepsnr(bit2));
+          
       } catch (IOException ex) {
           Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
       }
