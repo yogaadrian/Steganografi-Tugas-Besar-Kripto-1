@@ -14,10 +14,8 @@ public class Block {
   int bpp; /*in Byte*/
   int data[][];
   int lastInsert = -1;
+  int lastCheck = 0;
   public Plane[] planes;
-  public String detectedString = "";
-  
-  int inserted = 0;
   
   public Block(int i, int j, int[][] colorData, int bpp, double complexity) {
     int x = 0;
@@ -36,16 +34,12 @@ public class Block {
       x = 0;
       y++;
     }
-    
+        
     planes = new Plane[bpp * size];
     
     for(int a=0; a < bpp * size; a++) {
       planes[a] = new Plane(a, data, size, complexity);
-      if (planes[a].getComplexity() > complexity) {
-        detectedString += planes[a].detectedString;
-      }
     }
-    
   }
   
   public void constructNewBlock() {
@@ -81,7 +75,6 @@ public class Block {
         success = true;
         lastInsert = i;
 
-        ++inserted;
         i = (size * bpp) + 1; // keluar
       } else {
         ++i;
@@ -89,6 +82,25 @@ public class Block {
     }
     
     return success;
+  }
+  
+  public String getMessagePlane(double threshold) {
+    int i = lastCheck;
+    
+    String ret = "";
+    while ( (i < size * bpp) ) {
+      if (planes[i].getComplexity() > threshold) {
+        planes[i].genereateString();
+        ret = planes[i].detectedString;
+        lastCheck = i+1;
+
+        i = (size * bpp) + 1; // keluar
+      } else {
+        ++i;
+      }      
+    }
+    
+    return ret;
   }
   
   public void convertAllToPBC() {

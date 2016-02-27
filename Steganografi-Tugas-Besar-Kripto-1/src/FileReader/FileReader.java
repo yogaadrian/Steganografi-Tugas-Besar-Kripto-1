@@ -53,12 +53,12 @@ public class FileReader {
     public static void main(String[] args) {
 
         try {
-            boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
-            Path path = Paths.get("Lenna2.bmp");
+            //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
+            Path path = Paths.get("yarek.bmp");
             //Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
             
-            //Path path1 = Paths.get("Lenna.bmp");
+            //Path path1 = Paths.get("stegano2.bmp");
             //Path path = Paths.get("tucil2.doc");
             //byte[] rawData1 = Files.readAllBytes(path1);
             /*for(int i=0;i<rawData.length;i++){
@@ -66,24 +66,28 @@ public class FileReader {
             }*/
             
             String content="";
-            content=FileToString("tucil2.doc");
+            content=FileToString("aa.txt");
             
             //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
-            double threshold = 0.5;
+            double threshold = 0.3;
             
             Bitmap a = new Bitmap(rawData, threshold);
+            a.decrypt(threshold, "ok");
+            
+            //int[] seed = {890213, 19823312};
+            //System.out.println("XORS: " + a.xorshiftplus(seed));
             //Bitmap b = new Bitmap(rawData1, threshold);
             //System.out.println(a.calculatepsnr(b));
             //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
-            ///*
+            /*
             if (a.insertMessage(new StringBlock(content, threshold), threshold)) {
               System.out.println("Success");
             } else {
               System.out.println("Gagal");
             }
             
-            FileOutputStream fos = new FileOutputStream("stegano2.bmp");
+            FileOutputStream fos = new FileOutputStream("yarek.bmp");
             fos.write(a.extractBitmap());
             fos.close();
             

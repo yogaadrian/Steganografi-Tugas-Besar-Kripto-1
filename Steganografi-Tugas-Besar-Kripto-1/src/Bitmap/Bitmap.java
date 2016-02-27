@@ -6,6 +6,7 @@
 package Bitmap;
 
 import Message.StringBlock;
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -31,8 +32,6 @@ public class Bitmap {
 
   private byte[] conjugateBlock = new byte[0];
   private int messageLength = 0;
-
-  public String detectedString = "";
 
   public Bitmap(byte[] data, double complexity) {
     rawData = data;
@@ -94,11 +93,9 @@ public class Bitmap {
     for (int i = 0; i < blockY; i++) {
       for (int j = 0; j < blockX; j++) {
         blocks[i][j] = new Block(i * 8, j * 8, colorData, bpp, complexity);
-
-        detectedString += blocks[i][j].detectedString;
-        
       }
-    }
+    }     
+        
   }
 
   private int hexToInt(int a, int b, int c, int d) {
@@ -213,22 +210,42 @@ public class Bitmap {
 
   }
 
-  public boolean insertMessage(StringBlock message, double threshold) {
+  private int xorshiftplus(int seed[]) {
+    int x = seed[0];
+    int y = seed[1];
+    
+    seed[0] = y;
+    x ^= x << 23; // a
+    seed[1] = x ^ y ^ (x >> 17) ^ (y >> 26); // b, c
+    return seed[1] + y;
+  }
+  
+  
+  public boolean insertMessage(StringBlock message, String key, double threshold) {
     int block = 0;
     int successPlane = 0;
+    
+    int tempseed[] = {12314,901293};
 
     for (int i = 0; i < message.getPlaneNumber(); i++) {
       boolean stillTrying = true;
-      int y = block / blockY;
-      int x = block - (y * blockY);
+      
+      tempseed[0] = xorshiftplus(tempseed);
+      tempseed[1] = xorshiftplus(tempseed);
 
+      int y = abs(tempseed[0] % blockY);
+      int x = abs(tempseed[1] % blockX);
+      
       if (y < blockY) {
         while (!blocks[y][x].insertMessagePlane(message.getPlane(i), threshold) && stillTrying) {
           ++block;
 
-          y = block / blockY;
-          x = block - (y * blockY);
-
+          tempseed[0] = xorshiftplus(tempseed);
+          tempseed[1] = xorshiftplus(tempseed);
+ 
+          y = abs(tempseed[0] % blockY);
+          x = abs(tempseed[1] % blockX);           
+          
           if (y >= blockY) {
             stillTrying = false;
             y = 0;
@@ -249,14 +266,44 @@ public class Bitmap {
     return (successPlane == message.getPlaneNumber());
   }
 
-  private void convertAllToPBC() {
-    for (int block = 0; block < (blockX * blockY); block++) {
-      int y = block / blockY;
-      int x = block - (y * blockY);
-      blocks[y][x].convertAllToPBC();
-    }
-  }
+  public void decrypt(double threshold, String key) {
+    
+    int tempseed[] = {12314,901293};
+    
+    String message = "";
 
+    for (int i = 0; i < messageLength; i++) {
+      String ret = "";
+      do {
+        tempseed[0] = xorshiftplus(tempseed);
+        tempseed[1] = xorshiftplus(tempseed);
+
+        int y = abs(tempseed[0] % blockY);
+        int x = abs(tempseed[1] % blockX); 
+
+        ret = blocks[y][x].getMessagePlane(threshold);
+      } while (ret.equals(""));
+      message += ret;
+    }
+    
+    StringBlock sb = new StringBlock(message, 0);
+    
+    for (int i = 0; i < conjugateBlock.length; i++) {
+      int temp = hexToInt(conjugateBlock[i], conjugateBlock[i+1], conjugateBlock[i+2], conjugateBlock[i+3]);
+       sb.getPlane(temp).conjugate();
+       System.out.println("conj " + temp);
+      i += 3;
+    }
+     
+    String ret = "";
+    for (int i = 0; i < sb.getPlaneNumber(); i++) {
+      sb.getPlane(i).genereateString();
+      ret = ret + sb.getPlane(i).detectedString;
+    }
+    
+    System.out.println("msg: " + ret);
+  }
+  
   public int getColorStart() {
     return colorStart;
   }
@@ -271,24 +318,6 @@ public class Bitmap {
 
   public int getBPP() {
     return bpp;
-  }
-
-  public String getMessage(double threshold) {
-    StringBlock sb = new StringBlock(detectedString.substring(0, messageLength * 8), 0);
-    
-    for (int i = 0; i < conjugateBlock.length; i++) {
-      int temp = hexToInt(conjugateBlock[i], conjugateBlock[i+1], conjugateBlock[i+2], conjugateBlock[i+3]);
-       sb.getPlane(temp).conjugate();
-      i += 3;
-    }
-    
-    String ret = "";
-    for (int i = 0; i < sb.getPlaneNumber(); i++) {
-      sb.getPlane(i).genereateString();
-      ret = ret + sb.getPlane(i).detectedString;
-    }
-    
-    return ret;
   }
 
   public void constructNewBitmap() {

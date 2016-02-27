@@ -35,15 +35,6 @@ public class Plane {
     toCGC();    
     calculateComplexity();
     
-    if (getComplexity() > complexity) {      
-      for (int l = 0; l < size; l++) {
-        String biner = "";
-        for (int m = 0; m < size; m++) {
-          biner = biner.concat(Character.toString(data[l][m]));
-        }
-        detectedString = detectedString.concat(Character.toString((char) Integer.parseInt(biner, 2)));
-      }
-    }
   }
   
   public Plane(int i, String message, int size) {
