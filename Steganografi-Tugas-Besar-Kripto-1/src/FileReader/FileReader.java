@@ -82,7 +82,14 @@ public class FileReader {
                                 String inputFilePath, 
                                 String key, double threshold ) {
       try {
+          boolean isPNG = false;
           Path p = Paths.get(inputImagePath);
+          
+          if (GetExtension(inputImagePath).equals("png")) {
+            isPNG = ImageConverter.convertFormat(inputImagePath, "temp.bmp", "BMP");
+            p = Paths.get("temp.bmp");
+          }         
+          
           byte[] inputRawData = Files.readAllBytes(p);
           
           Bitmap inputImage = new Bitmap(inputRawData, threshold);
@@ -98,7 +105,13 @@ public class FileReader {
             System.out.println("Gagal");
           }        
           
-          savefile(outputImagePath, inputImage.extractBitmap(GetExtension(inputFilePath)));  
+          if (isPNG) {
+            savefile("temp.bmp", inputImage.extractBitmap(GetExtension(inputFilePath)));
+            ImageConverter.convertFormat("temp.bmp", outputImagePath, "PNG");
+            Files.delete(p);            
+          } else {          
+            savefile(outputImagePath, inputImage.extractBitmap(GetExtension(inputFilePath)));
+          }
           
       } catch (IOException ex) {
           Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +122,14 @@ public class FileReader {
     public void decryptStegano(String inputImagePath, String outputFilePath, 
                                 String key, double threshold ) {
       try {
+          boolean isPNG = false;
           Path p = Paths.get(inputImagePath);
+          
+          if (GetExtension(inputImagePath) == "png") {
+            isPNG = ImageConverter.convertFormat(inputImagePath, "temp.bmp", "BMP");
+            p = Paths.get("temp.bmp");
+          }          
+          
           byte[] inputRawData = Files.readAllBytes(p);
           
           Bitmap inputImage = new Bitmap(inputRawData, threshold);
@@ -117,7 +137,8 @@ public class FileReader {
           String outputFile = decrypt(inputImage.decrypt(threshold, key), key, 2, 1);
           byte [] outFile = StringToBytes(outputFile);
           
-          savefile(outputFilePath + "." + inputImage.ext, outFile);  
+          savefile(outputFilePath + "." + inputImage.ext, outFile);
+          if (isPNG) { Files.delete(p); }
           
       } catch (IOException ex) {
           Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
