@@ -32,6 +32,8 @@ public class Bitmap {
 
   private byte[] conjugateBlock = new byte[0];
   private int messageLength = 0;
+  
+  String ext = "txt";
 
   public Bitmap(byte[] data, double complexity) {
     rawData = data;
@@ -50,18 +52,27 @@ public class Bitmap {
     /* Get Conjugate Map */
     int headerSize = hexToInt(data[14], data[15], data[16], data[17]);
 
-    if ( colorStart - (headerSize + 14 + 4) > 0 ) {
-      conjugateBlock = new byte[colorStart - (headerSize + 14 + 4)];
+    if ( colorStart - (headerSize + 14 + 4 + 3) > 0 ) {
+      conjugateBlock = new byte[colorStart - (headerSize + 14 + 4 + 3)];
     } else {
       conjugateBlock = new byte[0];
     }
 
     int n = 0;
     
+    /* Kalo terdeteksi steganoimage */
     for (int i = headerSize + 14; i < colorStart; i++ ) {
       if ( i == headerSize + 14 ) {
+        /* Message Length */
         messageLength = hexToInt(data[i], data[i+1], data[i+2], data[i+3]);
         i = i + 3;
+      } else if ( i == headerSize + 14 + 4 ) {
+        /* Extension */
+        ext = "";
+        ext += (char) data[i];
+        ext += (char) data[i+1];        
+        ext += (char) data[i+2];
+        i = i + 2;
       } else {
         conjugateBlock[n] = data[i];
         ++n;
@@ -140,11 +151,11 @@ public class Bitmap {
     return b;
   }
 
-  public byte[] extractBitmap() {
+  public byte[] extractBitmap(String ext) {
     constructNewBitmap();
     byte[] newBitmap = new byte[colorStart
       + ( (blockY * 8) * (blockX * 8) * bpp )
-      + conjugateBlock.length + 4 ];
+      + conjugateBlock.length + 4 + 3];
 
     /* Copy Header */
     for (int i = 0; i < colorStart; i++) {
@@ -163,14 +174,12 @@ public class Bitmap {
     }
     
     /* Kalo ada Conjugate Map ini keubah */
-    int newSize = hexToInt(newBitmap[2], newBitmap[3], newBitmap[4], newBitmap[5]) + conjugateBlock.length;
+    int newSize = hexToInt(newBitmap[2], newBitmap[3], newBitmap[4], newBitmap[5]) + conjugateBlock.length + 4 + 3;
     int oldColorStart = colorStart;
-    colorStart = colorStart + conjugateBlock.length + 4;
-    int newHeaderSize = hexToInt(newBitmap[14], newBitmap[15], newBitmap[16], newBitmap[17]) + conjugateBlock.length;
+    colorStart = colorStart + conjugateBlock.length + 4 + 3;
     
     byte[] bNewSize = intToHex(newSize);
     byte[] bColorStart = intToHex(colorStart);
-    //byte[] bNewHeaderSize = intToHex(newHeaderSize);
 
     for (int i = 0; i < 4; i++) {
       newBitmap[2+i] = bNewSize[0+i];
@@ -181,8 +190,13 @@ public class Bitmap {
     
     System.arraycopy(intToHex(messageLength), 0, newBitmap, (oldColorStart), 4);
    
+    /* Data Ekstensi */
+    for (int i = 0; i < 3; i++) {
+      newBitmap[oldColorStart + 4 + i] = (byte) ext.charAt(i);
+    }
+    
     /* Masukin Conjugate Map nya */
-    System.arraycopy(conjugateBlock, 0, newBitmap, (oldColorStart+4), conjugateBlock.length);
+    System.arraycopy(conjugateBlock, 0, newBitmap, (oldColorStart+4+3), conjugateBlock.length);
     
     /* Mulai Color */
     int bit = colorStart;
@@ -301,11 +315,9 @@ public class Bitmap {
     }
     
     StringBlock sb = new StringBlock(message, 0);
-    
     for (int i = 0; i < conjugateBlock.length; i++) {
       int temp = hexToInt(conjugateBlock[i], conjugateBlock[i+1], conjugateBlock[i+2], conjugateBlock[i+3]);
-       sb.getPlane(temp).conjugate();
-       System.out.println("conj " + temp);
+      sb.getPlane(temp).conjugate();
       i += 3;
     }
      

@@ -72,8 +72,9 @@ public class FileReader {
 
         try {
             //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
-            Path path = Paths.get("Lenna.bmp");
-            System.out.println(GetExtension("Lenna.bmp"));
+            String p = "yarek.bmp";
+            Path path = Paths.get(p);
+            //System.out.println(GetExtension("Lenna.bmp"));
             //Path path = Paths.get("tucil2.doc");
             byte[] rawData = Files.readAllBytes(path);
             
@@ -91,7 +92,7 @@ public class FileReader {
             double threshold = 0.3;
             
             Bitmap a = new Bitmap(rawData, threshold);
-            //a.decrypt(threshold, "ok");
+            a.decrypt(threshold, "ok");
             
             //int[] seed = {890213, 19823312};
             //System.out.println("XORS: " + a.xorshiftplus(seed));
@@ -100,14 +101,12 @@ public class FileReader {
             //System.out.println(a.getMessage(threshold));
             //System.out.println(a.getMaximumSize(threshold));
             ///*
-            if (a.insertMessage(new StringBlock(content, threshold),"ok", threshold)) {
+            if (a.insertMessage(new StringBlock(content, threshold),"ok", threshold)) {              
               System.out.println("Success");
             } else {
               System.out.println("Gagal");
-            }
-        
-            savefile("stegano3.bmp",a.extractBitmap());
-            
+            }        
+            savefile("stegano3.bmp",a.extractBitmap(GetExtension("Lenna.bmp")));          
             //*/
             //System.out.println("msg: " + a.getMessage(threshold));
         } catch (IOException ex) {

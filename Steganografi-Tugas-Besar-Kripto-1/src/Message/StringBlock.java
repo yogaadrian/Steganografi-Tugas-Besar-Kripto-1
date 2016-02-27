@@ -30,6 +30,7 @@ public class StringBlock {
       planes[i] = new Plane(i, data, size);
       if ( planes[i].getComplexity() < threshold ) {
         planes[i].conjugate();
+        System.out.println("conjugate!");
         conjugateMap.add(i);
       }
     }
