@@ -439,15 +439,19 @@ public class MainMenu extends javax.swing.JFrame {
                     
                     imageInput = ImageIO.read(new File(jTextField5.getText()));
                     label.setIcon(new ImageIcon(imageInput));
-
+                    JLabel filePNSR = new JLabel();
+                    filePNSR.setText("PSNR = "+ f.PSNR);
                     JLabel filesize = new JLabel();
                     JLabel fileEx = new JLabel("File extension : ".concat(input.getName().substring(((int)input.getName().length())-3)));
                     String fs = "File Size".concat(String.valueOf(input.length()).concat("bytes"));
                     fileEx.setSize(300,300);
                     fileEx.setLocation(300, 300);
+                    filePNSR.setSize(300,300);
+                    filePNSR.setLocation(300, 250);
                     filesize.setLocation(300,275);
                     filesize.setText(fs);
                     filesize.setSize(300, 300);
+                    frame.add(filePNSR);
                     frame.add(filesize);
                     frame.add(fileEx);
                     frame.add(label);

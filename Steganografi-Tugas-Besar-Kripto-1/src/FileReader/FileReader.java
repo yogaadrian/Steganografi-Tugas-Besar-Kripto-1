@@ -27,6 +27,7 @@ import javax.imageio.ImageIO;
  * @author kevin
  */
 public class FileReader {
+    public String PSNR="";
 
     /**
      * @param args the command line arguments
@@ -122,6 +123,7 @@ public class FileReader {
           Bitmap bit2 = new Bitmap(inputP2, threshold);
           System.out.println("ukuran maximum :"+ bit1.getMaximumSize(threshold));
           System.out.println(bit1.calculatepsnr(bit2));
+          PSNR = String.valueOf(bit1.calculatepsnr(bit2));
           
       } catch (IOException ex) {
           Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
