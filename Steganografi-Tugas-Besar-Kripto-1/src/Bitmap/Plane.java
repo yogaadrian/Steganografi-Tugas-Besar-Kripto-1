@@ -111,7 +111,7 @@ public class Plane {
       }
     }
     
-    complexity = (double) point / ( ( ( size * size ) / 2 ) * 4 - ( 2 * size ) );
+    complexity = (double) point / ((2*size*(size-1)) );
  
   }
   
