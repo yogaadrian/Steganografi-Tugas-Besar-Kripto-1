@@ -70,6 +70,14 @@ public class FileReader {
             fos.close();
     }
     
+    public byte[] StringToBytes(String str){
+        byte[] b= new byte[str.length()];
+        for(int i=0;i<str.length();i++){
+            b[i]=(byte)str.charAt(i);
+        }
+        return b;
+    }
+    
     public void encryptStegano(String inputImagePath, String outputImagePath, 
                                 String inputFilePath, 
                                 String key, double threshold ) {
@@ -107,7 +115,7 @@ public class FileReader {
           Bitmap inputImage = new Bitmap(inputRawData, threshold);
           
           String outputFile = decrypt(inputImage.decrypt(threshold, key), key, 2, 1);
-          byte [] outFile = outputFile.getBytes();
+          byte [] outFile = StringToBytes(outputFile);
           
           savefile(outputFilePath + "." + inputImage.ext, outFile);  
           

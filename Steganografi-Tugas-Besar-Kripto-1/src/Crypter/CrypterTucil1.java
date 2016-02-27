@@ -52,8 +52,8 @@ public class CrypterTucil1 {
 
             for (int i = 0; i < plaintext.length(); i++) {
 
-                int temp = (int) plaintext.charAt(i);
-                temp = (temp + (int) key.charAt(i % key.length())) % 256;
+                byte temp = (byte) plaintext.charAt(i);
+                temp = (byte) ((temp + (byte) key.charAt(i % key.length())) % 256);
                 ans = ans.concat(Character.toString((char) temp));
 
             }
@@ -242,10 +242,10 @@ public class CrypterTucil1 {
 
             for (int i = 0; i < chipertext.length(); i++) {
 
-                int temp = (int) chipertext.charAt(i);
-                temp = (temp - (int) key.charAt(i % key.length()));
+                byte temp = (byte) chipertext.charAt(i);
+                temp = (byte) (temp - (byte) key.charAt(i % key.length()));
                 if (temp < 0) {
-                    temp = temp + 256;
+                    temp = (byte) (temp + 256);
                 }
                 ans = ans.concat(Character.toString((char) temp));
 
