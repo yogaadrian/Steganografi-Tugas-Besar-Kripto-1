@@ -108,7 +108,7 @@ public class FileReader {
           if (isPNG) {
             savefile("temp.bmp", inputImage.extractBitmap(GetExtension(inputFilePath)));
             ImageConverter.convertFormat("temp.bmp", outputImagePath, "PNG");
-            Files.delete(p);            
+            //Files.delete(p);            
           } else {          
             savefile(outputImagePath, inputImage.extractBitmap(GetExtension(inputFilePath)));
           }
@@ -135,7 +135,7 @@ public class FileReader {
           boolean isPNG = false;
           Path p = Paths.get(inputImagePath);
           
-          if (GetExtension(inputImagePath) == "png") {
+          if (GetExtension(inputImagePath).equals("png")) {
             isPNG = ImageConverter.convertFormat(inputImagePath, "temp.bmp", "BMP");
             p = Paths.get("temp.bmp");
           }          
@@ -148,7 +148,6 @@ public class FileReader {
           byte [] outFile = StringToBytes(outputFile);
           
           savefile(outputFilePath + "." + inputImage.ext, outFile);
-          if (isPNG) { Files.delete(p); }
           
       } catch (IOException ex) {
           Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
