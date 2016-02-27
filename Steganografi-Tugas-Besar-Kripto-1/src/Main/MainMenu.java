@@ -6,9 +6,6 @@
 package Main;
 
 import Bitmap.Bitmap;
-import Crypter.CrypterTucil1;
-import Crypter.Decrypt;
-import FileReader.FileReader;
 import FileReader.FileReader;
 import FileReader.ImageConverter;
 import Message.StringBlock;
@@ -89,6 +86,12 @@ public class MainMenu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -247,6 +250,26 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel5.setText("File Name");
 
+        jLabel7.setText("Output Image name");
+
+        jTextField6.setText(" ");
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Threshold");
+
+        jTextField7.setText(" ");
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Threshold");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -262,50 +285,73 @@ public class MainMenu extends javax.swing.JFrame {
                                 .add(27, 27, 27)
                                 .add(btn_openImage, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(layout.createSequentialGroup()
-                                .add(199, 199, 199)
-                                .add(jLabel3))
-                            .add(layout.createSequentialGroup()
                                 .add(180, 180, 180)
                                 .add(jLabel4))
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(layout.createSequentialGroup()
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                        .add(layout.createSequentialGroup()
-                                            .add(61, 61, 61)
-                                            .add(jRadioButton3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                            .add(jRadioButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                        .add(imageNameInput1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 385, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(18, 18, 18)
-                                    .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(layout.createSequentialGroup()
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                        .add(layout.createSequentialGroup()
-                                            .add(9, 9, 9)
-                                            .add(jLabel5))
-                                        .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                            .addContainerGap()
-                                            .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                    .add(18, 18, 18)
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                        .add(jTextField3)
-                                        .add(jTextField4)))))
-                        .add(29, 29, 29)))
+                            .add(layout.createSequentialGroup()
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                    .add(layout.createSequentialGroup()
+                                        .add(61, 61, 61)
+                                        .add(jRadioButton3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jRadioButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(imageNameInput1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 385, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(18, 18, 18)
+                                .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(layout.createSequentialGroup()
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(layout.createSequentialGroup()
+                                        .add(9, 9, 9)
+                                        .add(jLabel5))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                .add(18, 18, 18)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jTextField3)
+                                    .add(jTextField4)))
+                            .add(layout.createSequentialGroup()
+                                .add(199, 199, 199)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(layout.createSequentialGroup()
+                                        .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .add(32, 32, 32)
+                                        .add(jLabel8))
+                                    .add(jLabel3))))
+                        .add(29, 29, 29))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .add(212, 212, 212)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                    .add(jButton3)
+                                    .add(jTextField7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(18, 18, 18)
+                                .add(jLabel9))
+                            .add(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .add(jTextField5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 403, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(18, 18, 18)
+                                .add(jLabel7)))
+                        .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .add(layout.createSequentialGroup()
-                .add(224, 224, 224)
-                .add(jButton3)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(jLabel3)
-                .add(70, 70, 70)
+                .add(21, 21, 21)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel8)
+                    .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(26, 26, 26)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(imageNameInput)
                     .add(btn_openImage, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(28, 28, 28)
+                .add(2, 2, 2)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jTextField5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel7))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
                 .add(jLabel4)
@@ -325,7 +371,11 @@ public class MainMenu extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel5))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 17, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel9)
+                    .add(jTextField7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(18, 18, 18)
                 .add(jButton3))
         );
 
@@ -376,48 +426,18 @@ public class MainMenu extends javax.swing.JFrame {
         try {
             boolean enc;
             enc = jRadioButton4.isSelected();
-            boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
+            
             Path path = Paths.get(imageNameInput.getText());
+            
             //Path path = Paths.get("tucil2.doc");
-            byte[] rawData = Files.readAllBytes(path);
-            
-            //Path path1 = Paths.get("Lenna.bmp");
-            //Path path = Paths.get("tucil2.doc");
-            //byte[] rawData1 = Files.readAllBytes(path1);
-            /*for(int i=0;i<rawData.length;i++){
-                System.out.println(hex((int)rawData[i]));
-            }*/
-            
-            String content="";
-            
-            
-            content=FileToString(jTextField1.getText());
-            if (enc)
-                content = new CrypterTucil1().encrypt(content, jTextField2.getText(), 2, 1);
-            //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
-            double threshold = 0.5;
-            
-            Bitmap a = new Bitmap(rawData, threshold);
-            //Bitmap b = new Bitmap(rawData1, threshold);
-            //System.out.println(a.calculatepsnr(b));
-            //System.out.println(a.getMessage(threshold));
-            //System.out.println(a.getMaximumSize(threshold));
-            ///*
-            if (a.insertMessage(new StringBlock(content, threshold), jTextField2.getText(), threshold)) {
-              System.out.println("Success");
-            } else {
-              System.out.println("Gagal");
-            }
-            
-            FileOutputStream fos = new FileOutputStream("stegano2.bmp");
-            fos.write(a.extractBitmap());
-            fos.close();
+           FileReader f = new FileReader();
+            f.encryptStegano(imageNameInput.getText(), jTextField5.getText(), jTextField1.getText(), jTextField2.getText(), Double.valueOf(jTextField6.getText()));
             
             JFrame frame = new JFrame();
             JLabel label = new JLabel();
             Image imageInput;
                     
-                    imageInput = ImageIO.read(new File("stegano2.bmp"));
+                    imageInput = ImageIO.read(new File(jTextField5.getText()));
                     label.setIcon(new ImageIcon(imageInput));
 
                     JLabel filesize = new JLabel();
@@ -470,25 +490,21 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        PrintWriter writer = null;
-        try {
             // TODO add your handling code here:
             String getImage = imageNameInput1.getText();
             String fileName = jTextField4.getText();
             String key = jTextField3.getText();
-            Decrypt a = new Decrypt(getImage,key, jRadioButton2.isSelected());
-            String message = a.mes;
-            writer = new PrintWriter(fileName, "UTF-8");
-            writer.println(message);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            writer.close();
-        }
-        
+            FileReader f = new FileReader();
+            f.decryptStegano(getImage,fileName,key,Double.valueOf(jTextField7.getText()));
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -532,6 +548,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
@@ -542,5 +561,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

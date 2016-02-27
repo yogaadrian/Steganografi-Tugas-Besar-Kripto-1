@@ -70,7 +70,7 @@ public class FileReader {
             fos.close();
     }
     
-    private static void encryptStegano(String inputImagePath, String outputImagePath, 
+    public void encryptStegano(String inputImagePath, String outputImagePath, 
                                 String inputFilePath, 
                                 String key, double threshold ) {
       try {
@@ -98,7 +98,7 @@ public class FileReader {
       
     }
     
-    private static void decryptStegano(String inputImagePath, String outputFilePath, 
+    public void decryptStegano(String inputImagePath, String outputFilePath, 
                                 String key, double threshold ) {
       try {
           Path p = Paths.get(inputImagePath);
@@ -120,7 +120,7 @@ public class FileReader {
     public static void main(String[] args) {
       
       //encryptStegano("Lenna.bmp", "yukkelar.bmp", "tubes.doc", "yogaimba", 0.3);
-      decryptStegano("yukkelar.bmp", "out", "yogaimba", 0.3);
+      //decryptStegano("yukkelar.bmp", "out", "yogaimba", 0.3);
       
       //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
 
