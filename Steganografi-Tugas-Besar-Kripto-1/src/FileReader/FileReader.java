@@ -8,6 +8,7 @@ import Bitmap.Bitmap;
 import Bitmap.Plane;
 import Message.StringBlock;
 import static crypter.tucil.pkg1.CrypterTucil1.encrypt;
+import static crypter.tucil.pkg1.CrypterTucil1.decrypt;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -31,17 +32,17 @@ public class FileReader {
      * @param args the command line arguments
      */
     
-    public static String hex(int n) {
+    private static String hex(int n) {
     // call toUpperCase() if that's required
     return String.format("0x%2s", Integer.toHexString(n)).replace(' ', '0');
 }
 
-    public static String hex(float f) {
+    private static String hex(float f) {
     // change the float to raw integer bits(according to the OP's requirement)
     return hex(Float.floatToRawIntBits(f));
     }
     
-    public static String FileToString(String stringpath) throws IOException{
+    private static String FileToString(String stringpath) throws IOException{
         String content="";
         Path path=Paths.get(stringpath);
         byte[] rawData = Files.readAllBytes(path);
@@ -50,6 +51,7 @@ public class FileReader {
         }
         return content;
     }
+    
     private static String getFileExtension(File file) {
         String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
@@ -57,61 +59,75 @@ public class FileReader {
         else return "";
     }
     
-    public static String GetExtension(String stringpath){
+    private static String GetExtension(String stringpath){
         File file = new File(stringpath);
         return getFileExtension(file);
     }
     
-    public static void savefile(String stringpath,byte[] content) throws FileNotFoundException, IOException{
+    private static void savefile(String stringpath,byte[] content) throws FileNotFoundException, IOException{
         FileOutputStream fos = new FileOutputStream(stringpath);
             fos.write(content);
             fos.close();
     }
     
+    private static void encryptStegano(String inputImagePath, String outputImagePath, 
+                                String inputFilePath, 
+                                String key, double threshold ) {
+      try {
+          Path p = Paths.get(inputImagePath);
+          byte[] inputRawData = Files.readAllBytes(p);
+          
+          Bitmap inputImage = new Bitmap(inputRawData, threshold);
+          
+          String content = "";
+          content = FileToString(inputFilePath);
+            
+          String newContent = encrypt(content, key, 2, 1); // ini vigenere
+          
+          if (inputImage.insertMessage(new StringBlock(newContent, threshold), key, threshold)) {              
+            System.out.println("Success");
+          } else {
+            System.out.println("Gagal");
+          }        
+          
+          savefile(outputImagePath, inputImage.extractBitmap(GetExtension(inputFilePath)));  
+          
+      } catch (IOException ex) {
+          Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+    }
+    
+    private static void decryptStegano(String inputImagePath, String outputFilePath, 
+                                String key, double threshold ) {
+      try {
+          Path p = Paths.get(inputImagePath);
+          byte[] inputRawData = Files.readAllBytes(p);
+          
+          Bitmap inputImage = new Bitmap(inputRawData, threshold);
+          
+          String outputFile = decrypt(inputImage.decrypt(threshold, key), key, 2, 1);
+          byte [] outFile = outputFile.getBytes();
+          
+          savefile(outputFilePath + "." + inputImage.ext, outFile);  
+          
+      } catch (IOException ex) {
+          Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+    }
+    
     public static void main(String[] args) {
+      
+      //encryptStegano("Lenna.bmp", "yukkelar.bmp", "tubes.doc", "yogaimba", 0.3);
+      decryptStegano("yukkelar.bmp", "out", "yogaimba", 0.3);
+      
+      //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
 
-        try {
-            //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
-            String p = "yarek.bmp";
-            Path path = Paths.get(p);
-            //System.out.println(GetExtension("Lenna.bmp"));
-            //Path path = Paths.get("tucil2.doc");
-            byte[] rawData = Files.readAllBytes(path);
+      //System.out.println(a.calculatepsnr(b));
+      //System.out.println(a.getMessage(threshold));
+      //System.out.println(a.getMaximumSize(threshold));
             
-            //Path path1 = Paths.get("stegano2.bmp");
-            //Path path = Paths.get("tucil2.doc");
-            //byte[] rawData1 = Files.readAllBytes(path1);
-            /*for(int i=0;i<rawData.length;i++){
-                System.out.println(hex((int)rawData[i]));
-            }*/
-            
-            String content="";
-            content=FileToString("aa.txt");
-            
-            //String newcontent=encrypt(content,"feryimba",2,1);//ini vigenere
-            double threshold = 0.3;
-            
-            Bitmap a = new Bitmap(rawData, threshold);
-            a.decrypt(threshold, "ok");
-            
-            //int[] seed = {890213, 19823312};
-            //System.out.println("XORS: " + a.xorshiftplus(seed));
-            //Bitmap b = new Bitmap(rawData1, threshold);
-            //System.out.println(a.calculatepsnr(b));
-            //System.out.println(a.getMessage(threshold));
-            //System.out.println(a.getMaximumSize(threshold));
-            ///*
-            if (a.insertMessage(new StringBlock(content, threshold),"ok", threshold)) {              
-              System.out.println("Success");
-            } else {
-              System.out.println("Gagal");
-            }        
-            savefile("stegano3.bmp",a.extractBitmap(GetExtension("Lenna.bmp")));          
-            //*/
-            //System.out.println("msg: " + a.getMessage(threshold));
-        } catch (IOException ex) {
-            Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
 }

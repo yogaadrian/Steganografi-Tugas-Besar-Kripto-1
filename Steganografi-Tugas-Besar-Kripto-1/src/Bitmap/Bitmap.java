@@ -33,7 +33,7 @@ public class Bitmap {
   private byte[] conjugateBlock = new byte[0];
   private int messageLength = 0;
   
-  String ext = "txt";
+  public String ext = "txt";
 
   public Bitmap(byte[] data, double complexity) {
     rawData = data;
@@ -294,7 +294,7 @@ public class Bitmap {
     return (successPlane == message.getPlaneNumber());
   }
 
-  public void decrypt(double threshold, String key) {
+  public String decrypt(double threshold, String key) {
     
     int tempseed[] = keyToSeed(key);
     
@@ -327,7 +327,7 @@ public class Bitmap {
       ret = ret + sb.getPlane(i).detectedString;
     }
     
-    System.out.println("msg: " + ret);
+    return ret;
   }
   
   public int getColorStart() {
