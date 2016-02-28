@@ -51,8 +51,9 @@ public class Bitmap {
 
     /* Get Conjugate Map */
     int headerSize = hexToInt(data[14], data[15], data[16], data[17]);
-
-    if ( colorStart - (headerSize + 14 + 4 + 3) > 0 ) {
+    int colorPalette = hexToInt(data[46], data[47], data[48], data[49]);
+    
+    if ( colorStart - (headerSize + 14 + 4 + 3 + (colorPalette*4)) > 0 ) {
       conjugateBlock = new byte[colorStart - (headerSize + 14 + 4 + 3)];
     } else {
       conjugateBlock = new byte[0];
@@ -61,12 +62,12 @@ public class Bitmap {
     int n = 0;
     
     /* Kalo terdeteksi steganoimage */
-    for (int i = headerSize + 14; i < colorStart; i++ ) {
-      if ( i == headerSize + 14 ) {
+    for (int i = headerSize + (colorPalette*4) + 14; i < colorStart; i++ ) {
+      if ( i == headerSize + (colorPalette*4) + 14 ) {
         /* Message Length */
         messageLength = hexToInt(data[i], data[i+1], data[i+2], data[i+3]);
         i = i + 3;
-      } else if ( i == headerSize + 14 + 4 ) {
+      } else if ( i == headerSize + (colorPalette*4) + 14 + 4 ) {
         /* Extension */
         ext = "";
         ext += (char) data[i];

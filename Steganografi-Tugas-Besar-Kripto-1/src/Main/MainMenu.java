@@ -85,6 +85,7 @@ public class MainMenu extends javax.swing.JFrame {
     textOutputNameInsert = new javax.swing.JTextField();
     rbNoCipherInsert = new javax.swing.JRadioButton();
     btnInsertStegano = new javax.swing.JButton();
+    jButton1 = new javax.swing.JButton();
     jPanel4 = new javax.swing.JPanel();
     btn_openImage1 = new javax.swing.JButton();
     imageNameInput1 = new javax.swing.JTextField();
@@ -242,6 +243,13 @@ public class MainMenu extends javax.swing.JFrame {
       }
     });
 
+    jButton1.setText("Check Size Capacity");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+      }
+    });
+
     org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
     jPanel3Layout.setHorizontalGroup(
@@ -269,7 +277,9 @@ public class MainMenu extends javax.swing.JFrame {
             .addContainerGap())
           .add(jPanel3Layout.createSequentialGroup()
             .add(btnInsertStegano, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jButton1)
+            .addContainerGap())))
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -289,7 +299,9 @@ public class MainMenu extends javax.swing.JFrame {
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
         .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(btnInsertStegano)
+        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+          .add(btnInsertStegano)
+          .add(jButton1))
         .add(47, 47, 47))
     );
 
@@ -638,6 +650,17 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // TODO add your handling code here:
+    
+    Path path = Paths.get(imageNameInputInsert.getText());
+
+    FileReader f = new FileReader();
+    JOptionPane.showMessageDialog(null, "Maximum Size: " + f.getMaximumSize(imageNameInputInsert.getText(), Double.valueOf(textThresholdInsert.getText()))
+                                      , "Checker", JOptionPane.INFORMATION_MESSAGE);
+    
+  }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -677,6 +700,7 @@ public class MainMenu extends javax.swing.JFrame {
   private javax.swing.JTextField imageNameInputInsert;
   private javax.swing.JFileChooser imageOpener;
   private javax.swing.ButtonGroup insertCipherGroup;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel2;

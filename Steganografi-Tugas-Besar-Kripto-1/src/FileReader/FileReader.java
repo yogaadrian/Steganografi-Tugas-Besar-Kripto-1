@@ -79,6 +79,25 @@ public class FileReader {
         return b;
     }
     
+    public int getMaximumSize(String inputImagePath, double threshold) {
+      try {
+        Path p = Paths.get(inputImagePath);
+        
+        if (GetExtension(inputImagePath).equals("png")) {
+          ImageConverter.convertFormat(inputImagePath, "temp.bmp", "BMP");
+          p = Paths.get("temp.bmp");
+        }
+        
+        byte[] inputRawData = Files.readAllBytes(p);
+        
+        Bitmap inputImage = new Bitmap(inputRawData, threshold);
+        return inputImage.getMaximumSize(threshold);
+      } catch (IOException ex) {
+        Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return -1;
+    }
+    
     public void encryptStegano(String inputImagePath, String outputImagePath, 
                                 String inputFilePath, 
                                 String key, double threshold, boolean encrypted ) {
