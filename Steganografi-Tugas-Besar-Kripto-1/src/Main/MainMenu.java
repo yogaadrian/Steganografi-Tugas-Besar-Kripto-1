@@ -9,6 +9,7 @@ import Bitmap.Bitmap;
 import FileReader.FileReader;
 import FileReader.ImageConverter;
 import Message.StringBlock;
+import java.awt.Color;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -67,67 +68,68 @@ public class MainMenu extends javax.swing.JFrame {
     extractCipherGroup = new javax.swing.ButtonGroup();
     jTabbedPane1 = new javax.swing.JTabbedPane();
     jPanel3 = new javax.swing.JPanel();
-    btn_openImage = new javax.swing.JButton();
-    imageNameInput = new javax.swing.JTextField();
-    jTextField1 = new javax.swing.JTextField();
+    btnOpenImageInsert = new javax.swing.JButton();
+    imageNameInputInsert = new javax.swing.JTextField();
+    fileNameInput = new javax.swing.JTextField();
     jLabel2 = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
+    btnSelectFile = new javax.swing.JButton();
     jLabel3 = new javax.swing.JLabel();
     jPanel5 = new javax.swing.JPanel();
     jLabel8 = new javax.swing.JLabel();
-    jTextField6 = new javax.swing.JTextField();
+    textThresholdInsert = new javax.swing.JTextField();
     jPanel2 = new javax.swing.JPanel();
-    jRadioButton4 = new javax.swing.JRadioButton();
-    jTextField2 = new javax.swing.JTextField();
+    rbVigenereInsert = new javax.swing.JRadioButton();
+    textKeyInsert = new javax.swing.JTextField();
     jLabel6 = new javax.swing.JLabel();
     jLabel10 = new javax.swing.JLabel();
-    jTextField5 = new javax.swing.JTextField();
-    jRadioButton1 = new javax.swing.JRadioButton();
-    jButton2 = new javax.swing.JButton();
+    textOutputNameInsert = new javax.swing.JTextField();
+    rbNoCipherInsert = new javax.swing.JRadioButton();
+    btnInsertStegano = new javax.swing.JButton();
     jPanel4 = new javax.swing.JPanel();
     btn_openImage1 = new javax.swing.JButton();
     imageNameInput1 = new javax.swing.JTextField();
     jLabel4 = new javax.swing.JLabel();
     jPanel1 = new javax.swing.JPanel();
     jPanel6 = new javax.swing.JPanel();
-    jRadioButton3 = new javax.swing.JRadioButton();
-    jRadioButton2 = new javax.swing.JRadioButton();
+    rbNoCipherExtract = new javax.swing.JRadioButton();
+    rbVigenereExtract = new javax.swing.JRadioButton();
     jLabel1 = new javax.swing.JLabel();
     jTextField3 = new javax.swing.JTextField();
     jLabel9 = new javax.swing.JLabel();
     jTextField7 = new javax.swing.JTextField();
     jLabel5 = new javax.swing.JLabel();
     jTextField4 = new javax.swing.JTextField();
-    jButton3 = new javax.swing.JButton();
+    btnExtractStegano = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setTitle("Steganography Application");
     setLocationByPlatform(true);
     setResizable(false);
 
-    btn_openImage.setText("Select Image");
-    btn_openImage.addActionListener(new java.awt.event.ActionListener() {
+    btnOpenImageInsert.setText("Select Image");
+    btnOpenImageInsert.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        btn_openImageActionPerformed(evt);
+        btnOpenImageInsertActionPerformed(evt);
       }
     });
 
-    imageNameInput.setEditable(false);
-    imageNameInput.setForeground(new java.awt.Color(110, 110, 110));
-    imageNameInput.setText("No Selected Picture");
-    imageNameInput.setToolTipText("");
+    imageNameInputInsert.setEditable(false);
+    imageNameInputInsert.setForeground(new java.awt.Color(110, 110, 110));
+    imageNameInputInsert.setText("No Selected Picture");
+    imageNameInputInsert.setToolTipText("");
 
-    jTextField1.setText("No File Input");
-    jTextField1.setToolTipText("");
-    jTextField1.setEnabled(false);
+    fileNameInput.setText("No File Input");
+    fileNameInput.setToolTipText("");
+    fileNameInput.setEnabled(false);
 
     jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     jLabel2.setText("Message");
     jLabel2.setVerifyInputWhenFocusTarget(false);
 
-    jButton1.setText("Select File");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    btnSelectFile.setText("Select File");
+    btnSelectFile.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton1ActionPerformed(evt);
+        btnSelectFileActionPerformed(evt);
       }
     });
 
@@ -139,22 +141,22 @@ public class MainMenu extends javax.swing.JFrame {
 
     jLabel8.setText("Threshold");
 
-    jTextField6.setText("0.3");
-    jTextField6.setToolTipText("");
-    jTextField6.addActionListener(new java.awt.event.ActionListener() {
+    textThresholdInsert.setText("0.3");
+    textThresholdInsert.setToolTipText("");
+    textThresholdInsert.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jTextField6ActionPerformed(evt);
+        textThresholdInsertActionPerformed(evt);
       }
     });
 
-    insertCipherGroup.add(jRadioButton4);
-    jRadioButton4.setSelected(true);
-    jRadioButton4.setText("Vigenere");
-    jRadioButton4.setToolTipText("");
-    jRadioButton4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+    insertCipherGroup.add(rbVigenereInsert);
+    rbVigenereInsert.setSelected(true);
+    rbVigenereInsert.setText("Vigenere");
+    rbVigenereInsert.setToolTipText("");
+    rbVigenereInsert.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    rbVigenereInsert.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jRadioButton4ActionPerformed(evt);
+        rbVigenereInsertActionPerformed(evt);
       }
     });
 
@@ -163,12 +165,12 @@ public class MainMenu extends javax.swing.JFrame {
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel2Layout.createSequentialGroup()
-        .add(jRadioButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+        .add(rbVigenereInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .add(0, 6, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-      .add(org.jdesktop.layout.GroupLayout.TRAILING, jRadioButton4)
+      .add(org.jdesktop.layout.GroupLayout.TRAILING, rbVigenereInsert)
     );
 
     jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -176,12 +178,12 @@ public class MainMenu extends javax.swing.JFrame {
 
     jLabel10.setText("Output Filename");
 
-    jTextField5.setText("output");
+    textOutputNameInsert.setText("output");
 
-    insertCipherGroup.add(jRadioButton1);
-    jRadioButton1.setText("No Cipher");
-    jRadioButton1.setToolTipText("");
-    jRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    insertCipherGroup.add(rbNoCipherInsert);
+    rbNoCipherInsert.setText("No Cipher");
+    rbNoCipherInsert.setToolTipText("");
+    rbNoCipherInsert.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
     org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
@@ -191,24 +193,24 @@ public class MainMenu extends javax.swing.JFrame {
         .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
           .add(jPanel5Layout.createSequentialGroup()
             .addContainerGap()
-            .add(jRadioButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(rbNoCipherInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 34, Short.MAX_VALUE)
             .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-            .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(textKeyInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
           .add(jPanel5Layout.createSequentialGroup()
             .add(18, 18, 18)
             .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(jLabel8)
-              .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+              .add(textThresholdInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .add(52, 52, 52)
             .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
               .add(jPanel5Layout.createSequentialGroup()
                 .add(jLabel10)
                 .add(0, 0, Short.MAX_VALUE))
-              .add(jTextField5))))
+              .add(textOutputNameInsert))))
         .addContainerGap())
     );
     jPanel5Layout.setVerticalGroup(
@@ -218,9 +220,9 @@ public class MainMenu extends javax.swing.JFrame {
         .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
           .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .add(jRadioButton1))
+            .add(rbNoCipherInsert))
           .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-            .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(textKeyInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         .add(18, 18, 18)
         .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -228,15 +230,15 @@ public class MainMenu extends javax.swing.JFrame {
           .add(jLabel10))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-          .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-          .add(jTextField5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+          .add(textThresholdInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+          .add(textOutputNameInsert, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    jButton2.setText("Start Stegano");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
+    btnInsertStegano.setText("Start Stegano");
+    btnInsertStegano.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
+        btnInsertSteganoActionPerformed(evt);
       }
     });
 
@@ -255,20 +257,19 @@ public class MainMenu extends javax.swing.JFrame {
             .add(18, 18, 18))
           .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
             .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-              .add(imageNameInput)
-              .add(jTextField1))
+              .add(imageNameInputInsert)
+              .add(fileNameInput))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-              .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .add(btn_openImage, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+              .add(btnSelectFile, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .add(btnOpenImageInsert, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
             .add(10, 10, 10))
           .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
             .add(jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addContainerGap())))
-      .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        .add(209, 209, 209))
+            .addContainerGap())
+          .add(jPanel3Layout.createSequentialGroup()
+            .add(btnInsertStegano, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -277,18 +278,18 @@ public class MainMenu extends javax.swing.JFrame {
         .add(jLabel3)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-          .add(imageNameInput)
-          .add(btn_openImage, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .add(imageNameInputInsert)
+          .add(btnOpenImageInsert, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jLabel2)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-          .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-          .add(jButton1))
+          .add(fileNameInput, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+          .add(btnSelectFile))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
         .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jButton2)
+        .add(btnInsertStegano)
         .add(47, 47, 47))
     );
 
@@ -311,32 +312,32 @@ public class MainMenu extends javax.swing.JFrame {
 
     jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Steganography Settings"));
 
-    extractCipherGroup.add(jRadioButton3);
-    jRadioButton3.setText("No Cipher");
-    jRadioButton3.setToolTipText("");
-    jRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    extractCipherGroup.add(rbNoCipherExtract);
+    rbNoCipherExtract.setText("No Cipher");
+    rbNoCipherExtract.setToolTipText("");
+    rbNoCipherExtract.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-    extractCipherGroup.add(jRadioButton2);
-    jRadioButton2.setSelected(true);
-    jRadioButton2.setText("Vigenere");
-    jRadioButton2.setToolTipText("");
-    jRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    extractCipherGroup.add(rbVigenereExtract);
+    rbVigenereExtract.setSelected(true);
+    rbVigenereExtract.setText("Vigenere");
+    rbVigenereExtract.setToolTipText("");
+    rbVigenereExtract.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
     org.jdesktop.layout.GroupLayout jPanel6Layout = new org.jdesktop.layout.GroupLayout(jPanel6);
     jPanel6.setLayout(jPanel6Layout);
     jPanel6Layout.setHorizontalGroup(
       jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel6Layout.createSequentialGroup()
-        .add(jRadioButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 122, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+        .add(rbNoCipherExtract, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 122, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-        .add(jRadioButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+        .add(rbVigenereExtract, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
         .addContainerGap())
     );
     jPanel6Layout.setVerticalGroup(
       jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-        .add(jRadioButton3)
-        .add(jRadioButton2))
+        .add(rbNoCipherExtract)
+        .add(rbVigenereExtract))
     );
 
     jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -404,10 +405,10 @@ public class MainMenu extends javax.swing.JFrame {
         .addContainerGap(30, Short.MAX_VALUE))
     );
 
-    jButton3.setText("Extract Message");
-    jButton3.addActionListener(new java.awt.event.ActionListener() {
+    btnExtractStegano.setText("Extract Message");
+    btnExtractStegano.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton3ActionPerformed(evt);
+        btnExtractSteganoActionPerformed(evt);
       }
     });
 
@@ -423,12 +424,11 @@ public class MainMenu extends javax.swing.JFrame {
           .add(jPanel4Layout.createSequentialGroup()
             .add(imageNameInput1)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-            .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 133, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+            .add(btn_openImage1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 133, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+          .add(jPanel4Layout.createSequentialGroup()
+            .add(btnExtractStegano, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
-      .add(jPanel4Layout.createSequentialGroup()
-        .add(207, 207, 207)
-        .add(jButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     jPanel4Layout.setVerticalGroup(
       jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -442,7 +442,7 @@ public class MainMenu extends javax.swing.JFrame {
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 35, Short.MAX_VALUE)
-        .add(jButton3)
+        .add(btnExtractStegano)
         .addContainerGap())
     );
 
@@ -468,14 +468,14 @@ public class MainMenu extends javax.swing.JFrame {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_openImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openImageActionPerformed
+    private void btnOpenImageInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenImageInsertActionPerformed
         // TODO add your handling code here:
         if ( imageOpener.showOpenDialog(this)  == JFileChooser.APPROVE_OPTION ) {
             input = imageOpener.getSelectedFile();
             System.out.println(input.getName());
             if(!input.getName().endsWith(".bmp") && !input.getName().endsWith(".png")) {
                 input = null;
-                imageNameInput.setText("No Picture Selected");
+                imageNameInputInsert.setText("No Picture Selected");
                 JOptionPane.showMessageDialog(null, "Please select a bmp/png");
             } else {
                 try {
@@ -486,82 +486,122 @@ public class MainMenu extends javax.swing.JFrame {
                     label.setIcon(new ImageIcon(imageInput));
 
                     JLabel filesize = new JLabel();
-                    JLabel fileEx = new JLabel("File extension : ".concat(input.getName().substring(((int)input.getName().length())-3)));
-                    String fs = "File Size".concat(String.valueOf(input.length()).concat("bytes"));
-                    fileEx.setSize(300,300);
-                    fileEx.setLocation(300, 300);
-                    filesize.setLocation(300,275);
+                    JLabel fileEx = new JLabel(" File extension " + "\t" + " : " + (input.getName().substring(((int)input.getName().length())-3)));
+                    String fs = " File Size " + "\t" + " : " + String.valueOf(input.length()) + " bytes";
+                    
+                    fileEx.setSize(200,15);
+                    fileEx.setLocation(15, 15);
+                    fileEx.setBackground(Color.white);
+                    fileEx.setOpaque(true);
+                    
+                    filesize.setLocation(15, 35);
                     filesize.setText(fs);
-                    filesize.setSize(300, 300);
+                    filesize.setSize(200, 15);
+                    filesize.setBackground(Color.white);
+                    filesize.setOpaque(true);
+
                     frame.add(filesize);
                     frame.add(fileEx);
                     frame.add(label);
 
-                    frame.setSize(500, 500);
+                    int fW = 200;
+                    int fH = 200;
+                    if ( imageInput.getWidth(frame) > fW ) {
+                      fW = imageInput.getWidth(frame);
+                    }
+                    if ( imageInput.getHeight(frame) > fH ) {
+                      fH = imageInput.getHeight(frame);
+                    }
+                    
+                    frame.setSize(fW, fH);
                     frame.setVisible(true);
-                    imageNameInput.setText(input.getAbsolutePath());
+                    imageNameInputInsert.setText(input.getAbsolutePath());
                 } catch (IOException ex) {
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-    }//GEN-LAST:event_btn_openImageActionPerformed
+    }//GEN-LAST:event_btnOpenImageInsertActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnInsertSteganoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertSteganoActionPerformed
         // TODO add your handling code here:
         try {
             boolean enc;
-            enc = jRadioButton4.isSelected();
+            enc = rbVigenereInsert.isSelected();
             
-            Path path = Paths.get(imageNameInput.getText());
+            Path path = Paths.get(imageNameInputInsert.getText());
             
-            //Path path = Paths.get("tucil2.doc");
-           FileReader f = new FileReader();
-            f.encryptStegano(imageNameInput.getText(), jTextField5.getText(), jTextField1.getText(), jTextField2.getText(), Double.valueOf(jTextField6.getText()));
-            
+            FileReader f = new FileReader();
+                        
+            f.encryptStegano(imageNameInputInsert.getText(), textOutputNameInsert.getText(), 
+                            fileNameInput.getText(), 
+                            textKeyInsert.getText(), Double.valueOf(textThresholdInsert.getText()), enc);
+                        
             JFrame frame = new JFrame();
             JLabel label = new JLabel();
             Image imageInput;
                     
-                    imageInput = ImageIO.read(new File(jTextField5.getText()));
-                    label.setIcon(new ImageIcon(imageInput));
-                    JLabel filePNSR = new JLabel();
-                    filePNSR.setText("PSNR = "+ f.PSNR);
-                    JLabel filesize = new JLabel();
-                    JLabel fileEx = new JLabel("File extension : ".concat(input.getName().substring(((int)input.getName().length())-3)));
-                    String fs = "File Size".concat(String.valueOf(input.length()).concat("bytes"));
-                    fileEx.setSize(300,300);
-                    fileEx.setLocation(300, 300);
-                    filePNSR.setSize(300,300);
-                    filePNSR.setLocation(300, 250);
-                    filesize.setLocation(300,275);
-                    filesize.setText(fs);
-                    filesize.setSize(300, 300);
-                    frame.add(filePNSR);
-                    frame.add(filesize);
-                    frame.add(fileEx);
-                    frame.add(label);
+            imageInput = ImageIO.read(new File(textOutputNameInsert.getText()));
+            label.setIcon(new ImageIcon(imageInput));
+            
+            
+            JLabel filePNSR = new JLabel();
+            filePNSR.setText("PSNR : "+ f.PSNR);
+            JLabel filesize = new JLabel();
+            JLabel fileEx = new JLabel(" File extension " + "\t" + " : " + (input.getName().substring(((int)input.getName().length())-3)));
+            String fs = " File Size " + "\t" + " : " + String.valueOf(input.length()) + " bytes";
 
-                    frame.setSize(500, 500);
-                    frame.setVisible(true);
+            fileEx.setSize(200,15);
+            fileEx.setLocation(15, 15);
+            fileEx.setBackground(Color.white);
+            fileEx.setOpaque(true);
+
+            filesize.setLocation(15, 35);
+            filesize.setText(fs);
+            filesize.setSize(200, 15);
+            filesize.setBackground(Color.white);
+            filesize.setOpaque(true);
+
+            filePNSR.setSize(200, 15);
+            filePNSR.setLocation(15, 55);
+            filePNSR.setBackground(Color.white);
+            filePNSR.setOpaque(true);
             
-            
-            //*/
-            //System.out.println("msg: " + a.getMessage(threshold));
+            frame.add(filesize);
+            frame.add(fileEx);
+            frame.add(label);
+
+            int fW = 200;
+            int fH = 200;
+            if ( imageInput.getWidth(frame) > fW ) {
+              fW = imageInput.getWidth(frame);
+            }
+            if ( imageInput.getHeight(frame) > fH ) {
+              fH = imageInput.getHeight(frame);
+            }
+
+            frame.add(filePNSR);
+            frame.add(filesize);
+            frame.add(fileEx);
+            frame.add(label);
+
+            frame.setSize(fW, fH);
+            frame.setVisible(true);
+
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnInsertSteganoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSelectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFileActionPerformed
         // TODO add your handling code here:
         JFileChooser chooseFile = new JFileChooser();
         chooseFile.showOpenDialog(null);
         File f = chooseFile.getSelectedFile();
         String filename = f.getAbsolutePath();
-        jTextField1.setText(filename);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        fileNameInput.setText(filename);
+    }//GEN-LAST:event_btnSelectFileActionPerformed
 
     private void btn_openImage1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openImage1ActionPerformed
         JFileChooser chooseFile = new JFileChooser();
@@ -575,22 +615,24 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+    private void rbVigenereInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbVigenereInsertActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_rbVigenereInsertActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            // TODO add your handling code here:
+    private void btnExtractSteganoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExtractSteganoActionPerformed
+            boolean enc = rbVigenereExtract.isSelected();
             String getImage = imageNameInput1.getText();
             String fileName = jTextField4.getText();
             String key = jTextField3.getText();
             FileReader f = new FileReader();
-            f.decryptStegano(getImage,fileName,key,Double.valueOf(jTextField7.getText()));
-    }//GEN-LAST:event_jButton3ActionPerformed
+            f.decryptStegano( getImage, fileName, 
+                              key, Double.valueOf(jTextField7.getText()), enc);
+            JOptionPane.showMessageDialog(null, "Message have been extracted. Check your folder.", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnExtractSteganoActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void textThresholdInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textThresholdInsertActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_textThresholdInsertActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
@@ -624,16 +666,17 @@ public class MainMenu extends javax.swing.JFrame {
     
     private javax.swing.JFileChooser jFileChooser1;
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton btn_openImage;
+  private javax.swing.JButton btnExtractStegano;
+  private javax.swing.JButton btnInsertStegano;
+  private javax.swing.JButton btnOpenImageInsert;
+  private javax.swing.JButton btnSelectFile;
   private javax.swing.JButton btn_openImage1;
   private javax.swing.ButtonGroup extractCipherGroup;
-  private javax.swing.JTextField imageNameInput;
+  private javax.swing.JTextField fileNameInput;
   private javax.swing.JTextField imageNameInput1;
+  private javax.swing.JTextField imageNameInputInsert;
   private javax.swing.JFileChooser imageOpener;
   private javax.swing.ButtonGroup insertCipherGroup;
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
-  private javax.swing.JButton jButton3;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel2;
@@ -649,17 +692,16 @@ public class MainMenu extends javax.swing.JFrame {
   private javax.swing.JPanel jPanel4;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JPanel jPanel6;
-  private javax.swing.JRadioButton jRadioButton1;
-  private javax.swing.JRadioButton jRadioButton2;
-  private javax.swing.JRadioButton jRadioButton3;
-  private javax.swing.JRadioButton jRadioButton4;
   private javax.swing.JTabbedPane jTabbedPane1;
-  private javax.swing.JTextField jTextField1;
-  private javax.swing.JTextField jTextField2;
   private javax.swing.JTextField jTextField3;
   private javax.swing.JTextField jTextField4;
-  private javax.swing.JTextField jTextField5;
-  private javax.swing.JTextField jTextField6;
   private javax.swing.JTextField jTextField7;
+  private javax.swing.JRadioButton rbNoCipherExtract;
+  private javax.swing.JRadioButton rbNoCipherInsert;
+  private javax.swing.JRadioButton rbVigenereExtract;
+  private javax.swing.JRadioButton rbVigenereInsert;
+  private javax.swing.JTextField textKeyInsert;
+  private javax.swing.JTextField textOutputNameInsert;
+  private javax.swing.JTextField textThresholdInsert;
   // End of variables declaration//GEN-END:variables
 }

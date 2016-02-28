@@ -81,7 +81,7 @@ public class FileReader {
     
     public void encryptStegano(String inputImagePath, String outputImagePath, 
                                 String inputFilePath, 
-                                String key, double threshold ) {
+                                String key, double threshold, boolean encrypted ) {
       try {
           boolean isPNG = false;
           Path p = Paths.get(inputImagePath);
@@ -97,8 +97,11 @@ public class FileReader {
           
           String content = "";
           content = FileToString(inputFilePath);
-            
-          String newContent = encrypt(content, key, 2, 1); // ini vigenere
+          
+          String newContent = content;
+          if (encrypted) { 
+            newContent = encrypt(content, key, 2, 1); // ini vigenere 
+          }
           
           if (inputImage.insertMessage(new StringBlock(newContent, threshold), key, threshold)) {              
             System.out.println("Success");
@@ -132,7 +135,7 @@ public class FileReader {
     }
     
     public void decryptStegano(String inputImagePath, String outputFilePath, 
-                                String key, double threshold ) {
+                                String key, double threshold, boolean encrypted ) {
       try {
           boolean isPNG = false;
           Path p = Paths.get(inputImagePath);
@@ -146,7 +149,12 @@ public class FileReader {
           
           Bitmap inputImage = new Bitmap(inputRawData, threshold);
           
-          String outputFile = decrypt(inputImage.decrypt(threshold, key), key, 2, 1);
+          String outputFile = inputImage.decrypt(threshold, key);
+          
+          if (encrypted) { 
+            outputFile = decrypt(outputFile, key, 2, 1); // ini decrypt vigenere 
+          }
+          
           byte [] outFile = StringToBytes(outputFile);
           
           savefile(outputFilePath + "." + inputImage.ext, outFile);
@@ -156,18 +164,5 @@ public class FileReader {
       }
       
     }
-    
-    public static void main(String[] args) {
-      
-      //encryptStegano("Lenna.bmp", "yukkelar.bmp", "tubes.doc", "yogaimba", 0.3);
-      //decryptStegano("yukkelar.bmp", "out", "yogaimba", 0.3);
-      
-      //boolean bool=ImageConverter.convertFormat("Lenna.png","Lenna2.bmp", "BMP");
-
-      //System.out.println(a.calculatepsnr(b));
-      //System.out.println(a.getMessage(threshold));
-      //System.out.println(a.getMaximumSize(threshold));
-            
-    }
-    
+        
 }
