@@ -8,6 +8,7 @@ package Crypter;
 import Bitmap.Bitmap;
 import Bitmap.Plane;
 import FileReader.FileReader;
+import crypter.tucil.pkg1.CrypterTucil1;   
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,7 +54,8 @@ public class Decrypt {
                 }
             }
             if (cipher){
-                mes = CrypterTucil1.decrypt(mes,key,1,1);
+                CrypterTucil1 crypter = null; 
+                mes = crypter.decrypt(mes,key,1,1);
             }
             
            
